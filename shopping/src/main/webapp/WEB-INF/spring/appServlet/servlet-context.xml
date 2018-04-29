@@ -21,6 +21,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="loginInterceptor" class="yjc.wdb.interceptor.LoginInterceptor"></beans:bean>
+		<interceptors>
+			<interceptor>
+				<mapping path="join" />
+				<beans:ref bean="loginInterceptor" />
+			</interceptor>
+		</interceptors>
+	
 	<context:component-scan base-package="yjc.wdb.shop, yjc.wdb.persistence, yjc.wdb.service" />
 	
 	

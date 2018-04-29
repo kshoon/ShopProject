@@ -5,9 +5,11 @@ $(document).ready(function(){
 		
 	});
 	$("#mainInputSearch").blur(function(){
-		$(".dropdown-menu").css("display","none");	
-		$(".resmenu").remove();
-		$("#mainInputSearch").val("");
+		delay(function(){
+			$(".dropdown-menu").css("display","none");	
+			$(".resmenu").remove();
+			$("#mainInputSearch").val("");
+		}, 100);
 		
 	});
 	$("#mainInputSearch").keyup(function(){
@@ -29,7 +31,7 @@ $(document).ready(function(){
 							$(".dropdown-menu").append("<tr class='resmenu' id='tr["+data[i].product_no+"]'>" 
 									+"<td width=60%>"+data[i].product_name+"</td>"
 									+"<td><button type='button' class='btn ins' value='"+data[i].product_no+"'>등록</button></td>"
-									+"<td><button type='button' class='amk btn' value='"+data[i].product_no+"'><span class='glyphicon glyphicon-home'></span>5</button></td>" 
+									+"<td><button type='button' class='btn mak' value='"+data[i].product_no+"'><span class='glyphicon glyphicon-home'></span>5</button></td>" 
 									+"<td><button type='button' class='btn str' value='"+data[i].product_no+"'>500m</button></td></tr>");
 						}						
 					}
@@ -38,9 +40,21 @@ $(document).ready(function(){
 			
 		}
 	});
-	$(".amk btn").on("click", function(){
-		alert("ㅎㅇ");
+
+	$(document).on("click", ".ins", function(){
+		alert("등록");
+		alert(this.value);
 	});
+	
+	$(document).on("click", ".mak", function(){
+		alert("주변 정보");
+	});
+	
+	$(document).on("click", ".str", function(){
+		alert("최단거리");
+	});
+	
+	
 	
 });
 var delay = (function(){

@@ -83,7 +83,6 @@
 			</table>
 		</div>
 	</div>
-	
   
 
 <!-- 위시리스트  -->
@@ -91,6 +90,9 @@
   <div class="container text-center">
     <h1>위시리스트</h1>      
     <p>등록되었던 위시리스트 파바박</p>
+    아이디: ${member.member_id} <br>	
+   번호 : ${member.member_no }
+    
   </div>
 </div>
   <!-- 관련 이미지 컨텐츠1  -->

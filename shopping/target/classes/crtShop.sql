@@ -27,9 +27,7 @@ category_small varchar(30) not null
 )
 create table product (
 product_no int auto_increment primary key,
-category_no int not null,
 product_name varchar(20) not null,
-constraint foreign key (category_no) references category(category_no)
 )
 
 create table shop (
