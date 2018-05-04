@@ -16,6 +16,41 @@
 	</select>
 	
 	<select id="login" resultType="Member">
-		select member_id, member_pw from member where member_id = #{member_id} and member_pw = #{member_pw}
+		select * from member where member_id = #{member_id} and member_pw = #{member_pw}
+	</select>
+	
+	<select id="wlist" resultType="WishDTO">
+		select  wishList_no, a.wishList_date, b.product_no, b.product_name from wishlist a, product b
+		where a.member_no = #{mem_no} and a.product_no = b.product_no order by a.wishList_date desc
+	</select>
+	<insert id="insertW">
+		insert into wishlist(member_no, product_no) values (#{member_no}, #{product_no})
+	</insert>
+	<insert id="insertB">
+		insert into product(product_name) values (#{keyval})
+	</insert>
+	<select id="selectPL" resultType="WishDTO">
+		select * from product where product_name = #{keyval}
+	</select>
+	<select id="makList" resultType="MakDTO">	
+		select * from shop_product t1
+			inner join shop t2 ON t1.shop_no = t2.shop_no 
+ 			inner join product t3 ON t3.product_no = t1.product_no
+ 			where t3.product_no = #{product_no}
+	
+	</select>
+	
+	<select id="shopList" resultType="MakDTO">
+		select a.shop_no, a.product_no, b.shop_gps_longitude, b.shop_gps_latitude from shop_product a
+		inner join shop b
+ 		on a.shop_no = b.shop_no
+	</select>
+
+	<delete id="deleteW">
+		delete from wishlist where wishList_no = #{wish_no} and member_no = #{mem_no}
+	</delete>
+	
+	<select id="getM" resultType="Member">
+		select * from member where member_no = #{mem_no}
 	</select>
 </mapper>

@@ -6,5 +6,12 @@
 	<typeAliases>
   		<typeAlias alias="Member" type="yjc.wdb.domain.Member"/>
   		<typeAlias alias="Product" type="yjc.wdb.domain.Product"/>
+  		<typeAlias alias="Wishlist" type="yjc.wdb.domain.Wishlist"/>
+  		<!-- <typeAlias alias="LoginDTO" type="yjc.wdb.dto.LoginDTO"/> -->
+  		<typeAlias alias="WishDTO" type="yjc.wdb.dto.WishDTO"/>
+  		<typeAlias alias="MakDTO" type="yjc.wdb.dto.MakDTO"/>
+  		<typeAlias alias="InsertDTO" type="yjc.wdb.dto.InsertDTO"/>
+  		<typeAlias alias="Shop" type="yjc.wdb.domain.Shop"/>
+  		
 	</typeAliases>
 </configuration>

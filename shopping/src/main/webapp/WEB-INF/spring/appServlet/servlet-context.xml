@@ -24,12 +24,15 @@
 	<beans:bean id="loginInterceptor" class="yjc.wdb.interceptor.LoginInterceptor"></beans:bean>
 		<interceptors>
 			<interceptor>
-				<mapping path="join" />
+				<mapping path="/loginPost" />
 				<beans:ref bean="loginInterceptor" />
 			</interceptor>
-		</interceptors>
+		</interceptors> 
+		
+		
+		
 	
-	<context:component-scan base-package="yjc.wdb.shop, yjc.wdb.persistence, yjc.wdb.service" />
+	<context:component-scan base-package="yjc.wdb.shop, yjc.wdb.persistence, yjc.wdb.service, yjc.wdb.dto" />
 	
 	
 	
