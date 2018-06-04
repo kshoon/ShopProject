@@ -15,6 +15,7 @@ public class Member {
 	private String addr_dong;
 	private String addr_bunzi;
 	private String fcmToken;
+	private String result;
 	
 	public int getMember_no() {
 		return member_no;
@@ -99,6 +100,12 @@ public class Member {
 	}
 	public void setFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 	
 	

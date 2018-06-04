@@ -1,9 +1,15 @@
 package yjc.wdb.shop;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -36,76 +42,102 @@ public class ShopController {
 	@Inject
 	private ShopService service;
 	
-	@RequestMapping(value="main", method=RequestMethod.GET)
+	
+	//*************** https://wdbshop.zz.am/shop/main **********/
+	@RequestMapping(value="main", method=RequestMethod.GET)		//메인(로그인 전, 판매자, 구매자)
 	public String main(HttpSession session, Model model) throws Exception{
 		if(session.getAttribute("member")==null) {
 			return "login2";
 		}
 		Member member = (Member) session.getAttribute("member");
+		if(member.getMember_category()==3) { //세션 저장된 멤버가 판매자라면
+			return "mainS";
+		}
 		List<WishDTO> wlist = service.getwish(member.getMember_no());
 		model.addAttribute("wlist", wlist);
 		return "main";
 	}
 	
 	
-	@RequestMapping(value="mainSearch", method=RequestMethod.POST)
+	@RequestMapping(value="mainS", method=RequestMethod.GET)		//판매자 메인
+	public String mainS(HttpSession session, Model model) throws Exception{
+		Member member = (Member) session.getAttribute("member");
+		List<Product> plist = service.getShopProd
+				(member.getMember_no());
+		model.addAttribute("plist", plist);
+		return "mainS";
+	}
+	
+	@RequestMapping(value="mainSearch", method=RequestMethod.POST)		// 검색창 결과
 	@ResponseBody public List<Product> mainSearch(@RequestParam("keyword")String keyword) throws Exception{
 		SearchKeyword sk = new SearchKeyword();
 		sk.setKeyword(keyword);
 		return service.searchPro(sk);
 	}
 	
-	@RequestMapping(value="mainInsertwish", method=RequestMethod.GET)
+	@RequestMapping(value="fMap", method=RequestMethod.GET)		// 메인에서 지도에 뛰울 모든 매장
+	@ResponseBody public List<Shop> fMap() throws Exception{
+		return service.getShop();
+	}
+	
+	@RequestMapping(value="mainInsertwish", method=RequestMethod.GET)	//위시 추가 (검색창에서)
 	public String mainInsertwish(@RequestParam("prod_no")int prod_no,@RequestParam("member_no") int mem_no,RedirectAttributes rttr) throws Exception{
-		WishDTO dto = new WishDTO();
-		dto.setInsert(prod_no, mem_no);
-		service.insertWish(dto);
+		
+		InsertDTO dto = new InsertDTO(prod_no, mem_no);
+		int wish_no = 0;
+
+		if(checkWishList(mem_no, prod_no) != null) {		//있는지 확인여부
+			wish_no = checkWishList(mem_no, prod_no).getWishlist_no();
+			service.updateWish(wish_no);	//있을 시 날짜갱신
+		}else {
+			service.insertBtnWish(dto);		//없을 시 추가
+		}
 		List<WishDTO> wlist = getWishList(mem_no);
 		
 		Member member = new Member();
 		member = service.getMem(mem_no);
-//		model.addAttribute("wlist", wlist);
-//		model.addAttribute("member", member);
+
 		rttr.addFlashAttribute("wlist", wlist);
 		rttr.addFlashAttribute("member", member);
-	//	LoginDTO Ldto = 
-	//	model.addAttribute("dto", Ldto);
+
 		return "redirect:/main";
 	}
-	@RequestMapping(value="mainSearchBtn", method=RequestMethod.GET)
+	@RequestMapping(value="mainSearchBtn", method=RequestMethod.GET)		//위시 추가(버튼 클릭시)
 	public String mainSearchBtn(@RequestParam("keyval")String keyval,@RequestParam("member_no") int mem_no,RedirectAttributes rttr) throws Exception{
-		System.out.println(mem_no);
-		System.out.println("왔니");
-		InsertDTO dto = new InsertDTO();
-		dto.setInsert(keyval, mem_no);
+		
+		InsertDTO dto = new InsertDTO(keyval, mem_no);
 		if(service.selectProductList(keyval) == null) {	
-			System.out.println("널값");
 			service.insertBtnWish(dto);
 		}
-		System.out.println("2");
-		Thread.sleep(1000);
+
 		WishDTO dto2 = new WishDTO();
 		dto2 = service.selectProductList(keyval);
 		dto2.setMember_no(mem_no);
-		System.out.println(dto2.getProduct_no());
-		System.out.println(dto2.getMember_no());
+
+		int prod_no = dto2.getProduct_no();
+		int wish_no = 0;
+		System.out.println("prod"+prod_no);
+
+		if(checkWishList(mem_no, prod_no)!=null) {
+			wish_no = checkWishList(mem_no, prod_no).getWishlist_no();
+			System.out.println(wish_no);
+			service.updateWish(wish_no);
+		}else {
 		service.insertWish(dto2);
-		System.out.println("4");
+		}
 		List<WishDTO> wlist = getWishList(mem_no);
 		
 		Member member = new Member();
 		//member_no값으로 멤버객체 구하기
 		member = service.getMem(mem_no);
-//		model.addAttribute("wlist", wlist);
-//		model.addAttribute("member", member);
+
 		rttr.addFlashAttribute("wlist", wlist);
 		rttr.addFlashAttribute("member", member);
-	//	LoginDTO Ldto = 
-	//	model.addAttribute("dto", Ldto);
+
 		return "redirect:/main";
 	}
 	
-	@RequestMapping(value="removeWish", method=RequestMethod.GET)
+	@RequestMapping(value="removeWish", method=RequestMethod.GET)		//위시리스트 삭제
 	public String removeWish(int wish_no,@RequestParam("member_no") int mem_no, RedirectAttributes rttr) throws Exception{
 		service.deleteW(wish_no, mem_no);
 		List<WishDTO> wlist = getWishList(mem_no);
@@ -116,11 +148,11 @@ public class ShopController {
 		return"redirect:/main";
 	}
 	
-	@RequestMapping(value="join", method=RequestMethod.GET)
+	@RequestMapping(value="join", method=RequestMethod.GET)		//옛날 로그인화면
 	public void join() {
 	
 	}
-	@RequestMapping(value="login2", method=RequestMethod.GET)
+	@RequestMapping(value="login2", method=RequestMethod.GET)	//현재 로그인화면
 	public void login2() {
 	
 	}
@@ -129,7 +161,7 @@ public class ShopController {
 //		Member member = service.login(dto);
 //		model.addAttribute("member", member);
 //	}
-	@RequestMapping(value="join", method=RequestMethod.POST)
+	@RequestMapping(value="join", method=RequestMethod.POST)	//옛날 로그인2
 	public String join2(LoginDTO dto, Model model) throws Exception{
 	
 		Member member = service.login(dto);
@@ -144,7 +176,7 @@ public class ShopController {
 //		rttr.addAttribute("member", member);RedirectAttributes rttr
 		return "main";
 	}
-	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)	//현재 로그인
 	public String login(LoginDTO dto, HttpSession session) throws Exception {
 
 		System.out.println("loginPost Controller!!");
@@ -173,17 +205,16 @@ public class ShopController {
 		return returnURL;
 		
 	}
-	@RequestMapping(value="logout")
+	@RequestMapping(value="logout")								//로그아웃
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/login2";
 	}
 	
-	@RequestMapping(value="mak", method=RequestMethod.GET)
+	@RequestMapping(value="mak", method=RequestMethod.GET)		//근처 매장 갯수, 매장정보/현재좌표와의 거리/상품정보  리턴
 	@ResponseBody public List<MakLatLon> mak(@RequestParam("prod_no")int prod_no, double lat1, double lon1) throws Exception{
 		makLDTO makl = new makLDTO();
-		List<MakDTO> makL = service.makList(prod_no);
-
+		List<MakDTO> makL = service.makList(prod_no);		//물품을 가진 매장리스트 추출
 		List<MakLatLon> Mlalo = new ArrayList<MakLatLon>();		
 		MakLatLon malalo;
 		for(int i =0; i<makL.size();i++) {
@@ -197,39 +228,47 @@ public class ShopController {
 		malalo.setMet(met);
 		Mlalo.add(malalo);
 		}//상품이 있는 매장들  lat1,lon1이 자기 위치오면 자기 위치랑 거리계산한 배열이 metL, makL은 매장들 담겨있는 리스트
-
 		return Mlalo;
 	}
 	
-	@RequestMapping(value="imgTest", method=RequestMethod.GET)
+	@RequestMapping(value="imgTest", method=RequestMethod.GET)		//무쓸모
 	public void imgTest() {
 	
 	}
 	
-	@RequestMapping(value="map", method=RequestMethod.GET)
+	@RequestMapping(value="map", method=RequestMethod.GET)			//무쓸모2
 	public String map() {
 		return "/map/mapTest";
 	}
-	@RequestMapping(value="map2", method=RequestMethod.GET)
+	@RequestMapping(value="map2", method=RequestMethod.GET)			//무쓸모3
 	public String map2() {
 		return "/map/mapTest2";
 	}
 	
-	@RequestMapping(value="registerform1", method=RequestMethod.GET)
+	@RequestMapping(value="registerform1", method=RequestMethod.GET) //회원가입1
 	public String registerform1() {
 		return"/register/registerform1";
 	}
-	@RequestMapping(value="registerform2", method=RequestMethod.GET)
+	@RequestMapping(value="registerform2", method=RequestMethod.GET) //회원가입2
 	public String registerform2() {
 		return"/register/registerform2";
 	}
 	
-	@RequestMapping(value="registerform3", method=RequestMethod.GET)
+	@RequestMapping(value="registerform3", method=RequestMethod.GET) //회원가입3
 	public String registerform3() {
 		return"/register/registerform3";
 	}
 	
-	@RequestMapping(value="fGPS", method=RequestMethod.GET)
+	@RequestMapping(value="strMap", method=RequestMethod.GET)		//최단거리 넘어가는 부분
+	public String strMap (int shop_no, int prod_no, Model model) throws Exception{
+		Product prod = service.getProdOne(prod_no);
+		Shop shop = service.getShopOne(shop_no);
+		model.addAttribute("shop", shop);
+		model.addAttribute("product", prod);
+		return "strMapV";
+	}
+	
+	@RequestMapping(value="fGPS", method=RequestMethod.GET)			//안쓰이는듯함
 	@ResponseBody public List<MakLatLon> fGPS(@RequestParam("member_no")int mem_no, double lat, double lon) throws Exception{
 		makLDTO makl = new makLDTO();
 		List<MakDTO> makL = service.shopList();
@@ -267,8 +306,12 @@ public class ShopController {
 		return Mlalo;
 	}
 
-	private List<WishDTO> getWishList(int mem_no) throws Exception{
+	private List<WishDTO> getWishList(int mem_no) throws Exception{		//위시리스트 불러오는 메소드
 			return service.getwish(mem_no);			
+	}
+	
+	private Wishlist checkWishList(int mem_no, int prod_no) throws Exception{	//위시에 있는 물품인지 확인
+			return service.checkWish(mem_no, prod_no);
 	}
 	
 }

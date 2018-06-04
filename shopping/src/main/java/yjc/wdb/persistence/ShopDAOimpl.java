@@ -61,8 +61,7 @@ public class ShopDAOimpl implements ShopDAO {
 	@Override
 	public void insertBtnWish(InsertDTO dto) throws Exception {
 		System.out.println("ㅎㅇ");
-		session.insert(NAMESPACE+".insertB",dto);
-		
+		session.insert(NAMESPACE+".insertB",dto);		
 	}
 
 	@Override
@@ -76,13 +75,62 @@ public class ShopDAOimpl implements ShopDAO {
 		Map<String,Integer> map = new HashMap<>();
 		map.put("wish_no", wish_no);
 		map.put("mem_no", mem_no);
-		session.delete(NAMESPACE+".deleteW", map);
-		
+		session.delete(NAMESPACE+".deleteW", map);		
 	}
 
+	
 	@Override
 	public Member getMem(int mem_no) throws Exception {
 		return session.selectOne(NAMESPACE+".getM",mem_no);
 	}
+
+	@Override
+	public List<Shop> getShop() throws Exception {
+		return session.selectList(NAMESPACE+".getS");
+	}
+
+	@Override
+	public Shop getShopOne(int shop_no) throws Exception {
+		return session.selectOne(NAMESPACE+".getShopOne",shop_no);
+	}
+
+	@Override
+	public List<Product> getShopProd(int member_no) throws Exception {
+		return session.selectList(NAMESPACE+".getShopProdMem", member_no);
+	}
+
+	@Override
+	public Wishlist checkWish(int mem_no, int prod_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("member_no", mem_no);
+		map.put("product_no", prod_no);
+		return session.selectOne(NAMESPACE+".checkWish", map);
+	}
+
+	@Override
+	public void updateWish(int wish_no) throws Exception {
+		session.update(NAMESPACE+".updateWish", wish_no);
+		
+	}
+
+	@Override
+	public int productbool(String searchText) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".productbool", searchText);
+	}
+
+	@Override
+	public Product getProdOne(int prod_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".getProdOne", prod_no);
+	}
+
+	@Override
+	public int whisInProd(String product_name) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE +".whisInProd", product_name);
+	}
+
+	
 
 }

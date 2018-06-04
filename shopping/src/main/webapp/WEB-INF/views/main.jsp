@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@page session="true" %>
+    
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,9 @@
    <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d7fa1315630f585572f6d7cd683066d&libraries=services"></script>
   <script src='${pageContext.request.contextPath}/resources/js/main.js'></script>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/logo.css" />
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -48,12 +52,14 @@
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 360px;
+    min-width: 250px;
     min-height: 50px;
+    left : 36%;
+    
 
     z-index: 99;
     }
-    .makdiv{
+/*     .makdiv{
     	background-color:white;
     	position:absolute;
         z-index: 1;
@@ -61,7 +67,7 @@
         min-height:0;
         left:60%;
 
-    }
+    } */
 	ul.makul {
 	        min-width:0;
         min-height:0;
@@ -69,29 +75,21 @@
     margin: 3px;
     padding: 3px;
 	}
+	#modUl {
+	        min-width:0;
+        min-height:0;
+    list-style-type: none;
+    margin: 10px;
+    padding: 10px;
+	}
+	#map{
+	margin : 10px;
+	}
+
   </style>
 </head>
-<script>
-function firstMap() {
-	//좌표받기
-	if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position){
-        	fLat = position.coords.latitude; 
-       	 fLon =position.coords.longitude; 
-        	mapOp = {
-        			center: new daum.maps.LatLng(fLat, fLon), // 지도의 중심좌표
-        	        level: 3 // 지도의 확대 레벨
-        	}
-        	map = new daum.maps.Map(document.getElementById('map'), mapOp);
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-firstMap()
-</script>
-<body>
 
+<body>
 
 
 <!-- 젤위에 -->
@@ -103,16 +101,18 @@ firstMap()
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="main">쇼핑깜빡이</a>
+      <!-- <a class="navbar-brand" href="main">쇼핑깜빡이</a> -->
+	<a class="navbar-brand" href="main" style="font-family: 'Gugi', cursive; font-size: 2rem; color: white;"> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></a>
     </div>
-
     <div class="collapse navbar-collapse" id="myNavbar"> <!-- 가운데 창 collapse??-->
-    
      
+ 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
-
+		<ul class="nav navbar-nav navbar-right" style="color:white">
+       		<li style="padding-top:15px; padding-bottom:15px"> <span style="color:white; margin-left: 5px">${sessionScope.member.member_id }(${sessionScope.member.member_name })님 환영합니다.</span></li>
+      	</ul>
     </div>
   </div>
 </nav>
@@ -122,7 +122,7 @@ firstMap()
 		<div class="dropdown">
 		<form class="form-inline" role="search" id="Search">
 			<div class="form-group form-group-lg ">
-    			<input type="text" class="form-control" id="mainInputSearch"placeholder="wanna">
+    			<input type="text" class="form-control" id="mainInputSearch" placeholder="wanna">
     			<button type="button" class="btn btn-default btn-lg" id="mainSearch"><!-- <span class="glyphicon glyphicon-search"></span> -->추가</button>
   			</div>
 		</form>
@@ -131,6 +131,38 @@ firstMap()
 		</div>
 	</div>
   
+	
+		<!-- The Modal -->
+		<div class="modal fade" id="myModal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+	
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">~~을 파는 매장입니다.</h4>
+					</div>
+	
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div id="map1" style="width: 100%; height: 400px"></div>
+					</div>
+					<div id="map1cont">
+					<ul id="modUl">
+		<!-- 				<li>건물명 : 건물이름</li>
+						<li>거리 : 거리</li> -->
+					</ul>
+					</div>
+	
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideMarkers()">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
 
 <!-- 위시리스트  -->
 <div class="container">
@@ -150,26 +182,29 @@ firstMap()
 	</tr>
    	<c:forEach items="${wlist}" var = "wlist">
 			<tr>
-
 				<td>${wlist.product_name}</td>
 				<td>
 					<fmt:formatDate pattern="yyyy.MM.dd" value="${wlist.wishlist_date}"/>
 				</td>
 				
 				<td> 
-						<button type='button' class='btn mak' value="${wlist.product_no}">
+						<button type='button' data-toggle="modal"  data-target="#myModal" class='btn mak' value="${wlist.product_no}">
 						<!--<span class='glyphicon glyphicon-home'></span>5  -->위치정보가 없습니다.</button>
-						<div class="makdiv">
+			<%-- 			<div class="makdiv">
 							<ul class="makul" id="wm_${wlist.wishlist_no }">
 								<li>
 								</li>
 							</ul>
-						</div>					
+						</div>	 --%>				
 				</td>
-				<td><button type='button' class='btn str' value="${wlist.product_no}">위치정보가 없습니다.</button></td>
+				<td><button type='button' class='btn str' id="${wlist.product_no}"value="${wlist.product_no}">위치정보가 없습니다.</button></td>
 				<td><button type='button' class='btn rem' value="${wlist.wishlist_no}"><span class='glyphicon glyphicon-remove'></span></button></td>
 			</tr>
 		</c:forEach>
+	
+		
+		
+		
 <%-- 		  	<c:forEach items="${sessionScope.wlist}" var = "wlist">
 			<tr>
 
@@ -204,54 +239,29 @@ firstMap()
     
   </div>
 </div>
-  <!-- 관련 이미지 컨텐츠1  -->
-<!-- <div class="container bg-3 text-center" id="con1">    
-  <div class="row">
-    <div class="col-sm-4">
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-    <div class="col-sm-4"> 
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-    <div class="col-sm-4"> 
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-  </div>
-</div> --><!-- <br>
-<div class="container bg-3 text-center"  id="con2">
-	<div class="row">
-	<div class="col-sm-12"><br><br><br><br><br><br><br><br><br><br><br><br><br>	</div>
-	</div>
-</div>  -->
-<!-- 관련 이미지 컨텐츠2  -->
-<!-- <div class="container bg-3 text-center" id="con3">    
-  <div class="row">
-    <div class="col-sm-3">
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-    <div class="col-sm-3"> 
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-    <div class="col-sm-3"> 
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-    <div class="col-sm-3">
-      <p>Some text..</p>
-      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-    </div>
-  </div>
-</div><br><br> -->
+
+<div>
+ 	<c:forEach items="${slist}" var = "slist">
+ 	<p>${slist.shop_name}</p>
+ 	<p>${slist.shop_homepage}</p>
+ 	<p>${slist.shop_gps_longitude}</p>
+ 	
+ 	</c:forEach>
+ 	</div>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
-      아이디: ${member.member_id} <br>	
-   번호 : ${sessionScope.member.member_no } <br>
+	<div class="container">
+    <hr>
+        <div class="text-center center-block">
+            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
+            <br />
+                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+			</div>
+    <hr>
+	</div>
 
 </footer>
 </body>

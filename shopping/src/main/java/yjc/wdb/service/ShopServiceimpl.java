@@ -76,4 +76,50 @@ public class ShopServiceimpl implements ShopService {
 		return dao.getMem(mem_no);
 	}
 
+	@Override
+	public List<Shop> getShop() throws Exception {
+		
+		return dao.getShop();
+	}
+
+	@Override
+	public Shop getShopOne(int shop_no) throws Exception {
+		return dao.getShopOne(shop_no);
+	}
+
+	@Override
+	public List<Product> getShopProd(int member_no) throws Exception {
+		return dao.getShopProd(member_no);
+	}
+
+	@Override
+	public Wishlist checkWish(int mem_no, int prod_no) throws Exception {
+		return dao.checkWish(mem_no, prod_no);
+	}
+
+	@Override
+	public void updateWish(int wish_no) throws Exception {
+		dao.updateWish(wish_no);
+		
+	}
+
+	@Override
+	public int productbool(String searchText) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.productbool(searchText);
+	}
+
+	@Override
+	public Product getProdOne(int prod_no) throws Exception {
+		return dao.getProdOne(prod_no);
+	}
+
+	@Override
+	public int whisInProd(String product_name) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.whisInProd(product_name);
+	}
+
+
+
 }

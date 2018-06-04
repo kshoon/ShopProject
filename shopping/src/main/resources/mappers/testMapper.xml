@@ -53,4 +53,53 @@
 	<select id="getM" resultType="Member">
 		select * from member where member_no = #{mem_no}
 	</select>
+	<select id="getS" resultType="Shop">
+		select * from shop
+	</select>
+	<select id="getShopOne" resultType="Shop">
+		select * from shop where shop_no = #{shop_no}
+	</select>
+	<select id="getProdOne" resultType="Product">
+		select * from product where product_no = #{prod_no}
+	</select>
+
+	<select id="getShopProdMem" resultType="Product">
+		select t1.product_no, t3.product_name from shop_product t1
+		inner join shop t2
+		on t1.shop_no = t2.shop_no
+		inner join product t3
+		on t1.product_no = t3.product_no
+		where member_no = #{member_no}
+	</select>
+	
+	<select id="checkWish" resultType="Wishlist">
+		select wishlist_no from wishlist where member_no = #{member_no} and product_no = #{product_no}
+	</select>
+	
+	<update id="updateWish">
+		update wishlist set wishList_date = now() where wishlist_no = #{wishlist_no}
+	</update>
+	<select id="productbool" resultType="int">     
+      select count(*) from shop_product where #{product_name} IN 
+      (select product.product_name
+      			from shop_product, product
+      			where product.product_no = shop_product.product_no AND shop_product.shop_no = 
+      			(select shop.shop_no from shop
+       			where shop.member_no IN (select member_no from member where member_id='seller') 
+      			)
+   	)
+
+   </select>
+   
+   
+   
+   <select id="whisInProd" resultType="int">
+   	select count(*)
+	from wishlist, shop_product
+	where wishlist.product_no = shop_product.product_no AND 
+	wishlist.product_no IN
+	(select product_no from product	where product_name = #{product_name})
+		
+   </select>
+	
 </mapper>

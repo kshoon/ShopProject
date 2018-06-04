@@ -23,4 +23,14 @@ public interface ShopService {
 	public WishDTO selectProductList(String keyval) throws Exception;
 	public void deleteW(int wish_no, int mem_no) throws Exception;
 	public Member getMem(int mem_no) throws Exception;
+	public List<Shop> getShop()throws Exception;
+	public Shop getShopOne(int shop_no) throws Exception;
+	public List<Product> getShopProd(int member_no) throws Exception;
+	public Wishlist checkWish(int mem_no, int prod_no) throws Exception;
+	public void updateWish(int wish_no)throws Exception;
+	public int productbool(String searchText)throws Exception;
+	public Product getProdOne(int prod_no) throws Exception;
+	
+	//sj
+	public int whisInProd(String product_name) throws Exception;
 	}
