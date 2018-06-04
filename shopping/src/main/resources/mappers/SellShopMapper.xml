@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yjc.wdb.mapper.sellShopMapper">
+	<select id="Myshop" resultType="shop">
+		select * from shop where member_no = #{mem_no}
+	</select>
+	
+	<update id="updateShop">
+		update shop set shop_homepage = #{shop_homepage}, addr_bunzi = #{addr_bunzi} where shop_no = #{shop_no}
+	</update>
+	
+	<select id="getProd" resultType="Product">
+		select s1.product_no, p1.product_name from shop_product s1
+		inner join product p1
+		on s1.product_no =  p1.product_no
+		where s1.shop_no = #{shop_no}
+		order by p1.product_name
+	</select>
+	
+</mapper>

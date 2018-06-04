@@ -1,0 +1,61 @@
+package yjc.wdb.interceptor;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+
+
+
+public class LoginInterceptor extends HandlerInterceptorAdapter {
+	private static final String LOGIN = "login";
+	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+
+
+	
+	//MemberController에 'memberVO'라는 이름으로 객체를 담아 둔 상태이기 때문에 이 상태를 체크해서 HttpSession에 저장
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		HttpSession session = request.getSession();
+
+
+		ModelMap modelMap = modelAndView.getModelMap();
+		Object member = modelMap.get("member");
+
+		System.out.println("postHandle:" + member);
+		
+
+		if (member != null) {
+			logger.info("new login SUCCESS");
+			session.setAttribute(LOGIN, member);
+			//response.sendRedirect("/");
+			
+			Object dest = session.getAttribute("dest");
+			
+			response.sendRedirect(dest != null ? (String)dest:"/");
+		}
+	}
+
+
+	
+	//기존 HttpSesssion에 남아있는 정보가 있는 경우에 정보 삭제
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute(LOGIN) != null) {
+			logger.info("clear login data before");
+			session.removeAttribute(LOGIN);
+		}
+
+		return true;
+	}
+}

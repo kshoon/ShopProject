@@ -306,7 +306,6 @@ function firstGps() {
         	 myLat = position.coords.latitude; 
         	 myLon =position.coords.longitude; 
         	 var query = {prod:this.value, lat1:myLat, lon1:myLon};
-        	 var element = this;
         	 var prod;
         	 $('.mak').each(function(index,item){
         		 $.ajax({

@@ -1,0 +1,13 @@
+
+package yjc.wdb.service;
+
+import yjc.wdb.domain.Member;
+import yjc.wdb.dto.LoginDTO;
+
+
+public interface MemberService {
+	public Member login(LoginDTO dto) throws Exception;
+	public Integer loginCheck(LoginDTO dto) throws Exception;
+	public String getToken(String member_id) throws Exception;
+
+}
