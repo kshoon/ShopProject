@@ -39,6 +39,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	/*	if(request.getRequestURI().equals("/shop/login2")) {
 			return true;
 		}*/
+
+
+
+		if(request.getParameter("mem_no") != null) {
+			return true;
+		}
 		if (session.getAttribute("login") == null) {
 			logger.info("current user is not logined");
 			

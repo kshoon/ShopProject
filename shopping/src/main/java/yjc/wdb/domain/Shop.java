@@ -14,6 +14,9 @@ public class Shop {
 	 private String shop_explain;
 	 private double shop_gps_longitude;
 	 private double shop_gps_latitude;
+	 private String shop_image;
+	 private String shop_bh;
+	 
 	public int getShop_no() {
 		return shop_no;
 	}
@@ -91,5 +94,17 @@ public class Shop {
 	}
 	public void setShop_gps_latitude(double shop_gps_latitude) {
 		this.shop_gps_latitude = shop_gps_latitude;
+	}
+	public String getShop_image() {
+		return shop_image;
+	}
+	public void setShop_image(String shop_image) {
+		this.shop_image = shop_image;
+	}
+	public String getShop_bh() {
+		return shop_bh;
+	}
+	public void setShop_bh(String shop_bh) {
+		this.shop_bh = shop_bh;
 	}
 }

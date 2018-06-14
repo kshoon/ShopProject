@@ -9,8 +9,10 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import yjc.wdb.domain.Alram;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
+import yjc.wdb.dto.shopSellWishDTO;
 
 
 
@@ -32,6 +34,55 @@ public class SellShopDAOimpl implements SellShopDAO {
 	public List<Product> getProd(int shop_no) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectList(NAMESPACE+".getProd", shop_no);
+	}
+	@Override
+	public void deleteSPP(int prod_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("prod_no", prod_no);
+		map.put("shop_no", shop_no);
+		session.delete(NAMESPACE+".deleteSPP", map);
+		
+	}
+	@Override
+	public List<Product> getPlist(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".plist", shop_no);
+	}
+	@Override
+	public void insertSPP(int prod_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("prod_no", prod_no);
+		map.put("shop_no", shop_no);
+		session.insert(NAMESPACE+".insertSPP", map);
+		
+	}
+	@Override
+	public List<shopSellWishDTO> shopSellWish(int shop_no) throws Exception {
+		return session.selectList(NAMESPACE+".shopSellWish", shop_no);
+	}
+	@Override
+	public void updateSPU(int prod_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("prod_no", prod_no);
+		map.put("shop_no", shop_no);
+		session.update(NAMESPACE+".updateSPU", map);
+		
+	}
+	@Override
+	public List<Product> getSold(int shop_no) throws Exception {
+		return session.selectList(NAMESPACE+".getSold",shop_no);
+	}
+	@Override
+	public void updateSPUO(int prod_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("prod_no", prod_no);
+		map.put("shop_no", shop_no);
+		session.update(NAMESPACE+".updateSPUO", map);
+		
+	}
+	@Override
+	public List<Alram> getAlram(int mem_no) throws Exception {
+		return session.selectList(NAMESPACE+".getAlram", mem_no);
 	}
 	
 

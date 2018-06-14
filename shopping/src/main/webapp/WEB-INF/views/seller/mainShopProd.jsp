@@ -55,45 +55,52 @@
 
 
 <!-- 젤위에 -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container"> <!--전체 폭 -->
-    <div class="navbar-header"> <!--로고 -->
- 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <!-- <a class="navbar-brand" href="main">쇼핑깜빡이</a> -->
-	<a class="navbar-brand" href="main" style="font-family: 'Gugi', cursive; font-size: 2rem; color: white;"> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar"> <!-- 가운데 창 collapse??-->
-     
- 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-      </ul>
-       <div class="dropdown navbar-right">
-  			<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">내매장보기
-  			<span class="caret"></span></button>
-  			<ul class="dropdown-menu">
-	    		<li><a href="#">통합관리</a></li>
-    			<li><a href="#">A마트</a></li>
-    			<li><a href="#">B마트</a></li>
-  			</ul>
-		</div>
-		<ul class="nav navbar-nav navbar-right" style="color:white">
-       		<li style="padding-top:15px; padding-bottom:15px"> <span style="color:white; margin-left: 5px">${sessionScope.member.member_id }(${sessionScope.member.member_name })님 환영합니다.</span></li>
-      	</ul>
-    </div>
-  </div>
-</nav>
+<jsp:include page="sellerNaviTop.jsp" />
 
 	<!--상품관리 -->
 	<div class="container" style="padding-top: 40px">
-		<c:forEach items="${plist}" var = "plist">
-			<p>${plist.product_name}</p>
-		
+		<ul class="nav nav-tabs">
+			<li class="nav-item nav-link active"><a href="#" class='shopNavi' id='naviAll'>전체</a></li>
+    		<li class="nav-item nav-link"><a href="#" class='shopNavi' id='naviA'>ㄱ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviB'>ㄴ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviC'>ㄷ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviD'>ㄹ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviE'>ㅁ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviF'>ㅂ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviG'>ㅅ</a></li>    
+    		<li><a href="#" class='shopNavi' id='naviH'>ㅇ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviI'>ㅈ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviJ'>ㅊ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviK'>ㅋ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviL'>ㅌ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviM'>ㅍ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviN'>ㅎ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviO'>A~E</a></li>
+    		<li><a href="#" class='shopNavi' id='naviP'>F~J</a></li>
+    		<li><a href="#" class='shopNavi' id='naviQ'>K~O</a></li>
+    		<li><a href="#" class='shopNavi' id='naviR'>P~T</a></li>
+    		<li><a href="#" class='shopNavi' id='naviS'>U~Z</a></li>
+    		<li><a href="#" class='shopNavi' id='naviT'>0~9</a></li>
+  		</ul>
+			<p>이름 | 삭제 | 품절</p>
+			<c:forEach items="${plist}" var = "plist">
+			
+				<c:if test="(plist.index%4)==1">		<div class="row"></c:if>
+				<div class="col-sm-3">
+					<p>${plist.product_name} 
+						<a href="#" onclick="SPProdclick('${plist.product_no}','${member.member_no }'); return false;">
+							<span class="glyphicon glyphicon-remove"style="color:black;"></span>
+							
+						</a>
+						<a href="#" onclick="SPSoldclick('${plist.product_no}','${member.member_no }'); return false;">
+							<span class="glyphicon glyphicon-ban-circle"style="color:black;"></span>
+							
+						</a>
+					</p>
+				</div>	
+				<c:if test="(plist.index%4)==1">		</div></c:if>
 			</c:forEach>
+		
 	</div>
 	
 	

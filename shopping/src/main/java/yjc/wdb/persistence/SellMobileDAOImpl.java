@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.dto.MakDTO;
+import yjc.wdb.dto.MyWishShopDTO;
 import yjc.wdb.dto.WishDTO;
 
 @Repository
@@ -63,5 +64,9 @@ public class SellMobileDAOImpl implements SellMobileDAO{
 	public List<Shop> AllShop() throws Exception {
 		return session.selectList(NAMESPACE+".Allshop");
 		
+	}
+	@Override
+	public List<MyWishShopDTO> MyWishShop(int mem_no) throws Exception {
+		return session.selectList(NAMESPACE+".MyWishShop", mem_no);
 	}
 }

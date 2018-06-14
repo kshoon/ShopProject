@@ -15,6 +15,8 @@ public class MakDTO {
 	 private String shop_explain;
 	 private double shop_gps_longitude;
 	 private double shop_gps_latitude;
+	 private String shop_image;
+	 private String shop_bh;
 	 private String product_name;
 	 
 	public int getShop_no() {
@@ -106,5 +108,17 @@ public class MakDTO {
 	}
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
+	}
+	public String getShop_image() {
+		return shop_image;
+	}
+	public void setShop_image(String shop_image) {
+		this.shop_image = shop_image;
+	}
+	public String getShop_bh() {
+		return shop_bh;
+	}
+	public void setShop_bh(String shop_bh) {
+		this.shop_bh = shop_bh;
 	}
 }

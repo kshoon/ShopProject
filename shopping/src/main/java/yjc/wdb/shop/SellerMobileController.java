@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.domain.Wishlist;
+import yjc.wdb.dto.MyWishShopDTO;
 import yjc.wdb.dto.WishDTO;
 import yjc.wdb.service.SellMobileService;
 import yjc.wdb.service.ShopService;
@@ -82,7 +83,7 @@ public class SellerMobileController {
 		
 		return callback+"("+result+")";
 	}
-	@RequestMapping(value="plist" , produces = "application/text; charset=utf8")		// 구매자들이 위시에 추가한 물품중 내매장에 없는 목록
+	@RequestMapping(value="plist" , produces = "application/text; charset=utf8")		// 모든 물품중 내매장에 없는 목록
 	@ResponseBody public String plist(@RequestParam("mem_no")int mem_no, String callback) throws Exception{
 		List<Shop> list = service.myshop(mem_no); //리스트이지만 매장이 한개라고 가정 한개만 쓰도록 하겠음
 		Shop shop = list.get(0);
@@ -148,6 +149,22 @@ public class SellerMobileController {
 	@ResponseBody String AllShop (@RequestParam("mem_no")int mem_no, String callback) throws Exception{
 		List<Shop> list = service.AllShop();
 		
+		String result = null;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		 try {
+				result=mapper.writeValueAsString(list);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return callback+"("+result+")";
+	}
+	
+	@RequestMapping(value="MyWishShop" , produces = "application/text; charset=utf8")		// 내 위시 물품 파는 매장
+	@ResponseBody String MyWishShop (int mem_no, String callback) throws Exception{
+		List<MyWishShopDTO> list = service.MyWishShop(mem_no);
 		String result = null;
 		ObjectMapper mapper = new ObjectMapper();
 		

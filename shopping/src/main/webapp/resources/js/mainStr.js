@@ -5,10 +5,11 @@ $(document).ready(function() {
 	var Slon = $('#hShop_lon').val();
 	var Shome = $('#hShop_hom').val();
 	var Saddr = $('#hShop_addr').val();
-	SecondMap(Sname, Slon, Slat, Shome, Saddr);
+	var Sbh = $('#hShop_bh').val();
+	SecondMap(Sname, Slon, Slat, Shome, Saddr, Sbh);
 });
 var overlays=[];
-function SecondMap(shop_name,shop_gps_longitude, shop_gps_latitude, shop_home, shop_addr) {
+function SecondMap(shop_name,shop_gps_longitude, shop_gps_latitude, shop_home, shop_addr, shop_bh) {
 	// 좌표받기
 	if (navigator.geolocation) {
 		navigator.geolocation
@@ -58,7 +59,7 @@ function SecondMap(shop_name,shop_gps_longitude, shop_gps_latitude, shop_home, s
 					    '            <div class="desc">' + 
 					    '                <div class="ellipsis">'+shop_addr+'</div>' + 
 					    '   <div><a href=https://'+shop_home+'>홈페이지</a>, 전화번호 : 010-1234-5678</div>' + //전화번호 수정바람
-					    '  				 <div>영업시간 : '+'매일 10시 ~ 22시'+'</div>'+		//영업시간 수정바람
+					    '  				 <div>영업시간 : '+shop_bh+'</div>'+		//영업시간 수정바람
 					    '  				 <div><button type="button" class="btn-info">길찾기</button></div>'+
 					    '            </div>' + 
 					    '        </div>' + 

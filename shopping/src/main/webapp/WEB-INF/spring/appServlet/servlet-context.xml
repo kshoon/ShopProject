@@ -31,11 +31,20 @@
 				<beans:ref bean="loginInterceptor" />
 			</interceptor>
 			
-			<!-- <interceptor>
+			<interceptor>
 				<mapping path="/**"/>
 					<exclude-mapping path="/login2"/>
+					<exclude-mapping path="/loginPost"/>
+					<exclude-mapping path="/resources/**"/>
+					<exclude-mapping path="/registerform1"/>
+					<exclude-mapping path="/registerform2"/>
+					<exclude-mapping path="/registerform3"/>
+					<exclude-mapping path="/map"/>
+					<exclude-mapping path="/map2"/>
+					<exclude-mapping path="/mak"/>
+					<exclude-mapping path="/MyWishShop"/>
 				<beans:ref bean="authInterceptor" />
-			</interceptor>  -->
+			</interceptor> 
 		
 		</interceptors> 
 

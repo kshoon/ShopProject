@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import yjc.wdb.domain.Member;
 
 import yjc.wdb.dto.LoginDTO;
+import yjc.wdb.dto.alrListDTO;
 
 
 @Repository
@@ -37,6 +38,17 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public String getToken(String member_id) throws Exception {
 		return session.selectOne(NAMESPACE+".getToken", member_id);
+	}
+
+	@Override
+	public String getNoToken(int member_no) throws Exception {
+		return session.selectOne(NAMESPACE+".getNoToken", member_no);
+	}
+
+	@Override
+	public void insertAlram(alrListDTO dto) throws Exception {
+		session.insert(NAMESPACE+".insertAlram", dto);
+		
 	}
 
 

@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import yjc.wdb.domain.Member;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.SearchKeyword;
@@ -33,6 +36,7 @@ import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
 import yjc.wdb.dto.MakLatLon;
 import yjc.wdb.dto.WishDTO;
+import yjc.wdb.dto.alrListDTO;
 import yjc.wdb.dto.makLDTO;
 import yjc.wdb.service.ShopService;
 
@@ -51,6 +55,9 @@ public class ShopController {
 		}
 		Member member = (Member) session.getAttribute("member");
 		if(member.getMember_category()==3) { //세션 저장된 멤버가 판매자라면
+			List<Shop> slist = service.getShopMem(member.getMember_no());
+			Shop shop = slist.get(0);
+			model.addAttribute("shop", shop);
 			return "mainS";
 		}
 		List<WishDTO> wlist = service.getwish(member.getMember_no());
@@ -62,9 +69,12 @@ public class ShopController {
 	@RequestMapping(value="mainS", method=RequestMethod.GET)		//판매자 메인
 	public String mainS(HttpSession session, Model model) throws Exception{
 		Member member = (Member) session.getAttribute("member");
-		List<Product> plist = service.getShopProd
-				(member.getMember_no());
+		List<Product> plist = service.getShopProd(member.getMember_no());
+		List<Shop> slist = service.getShopMem(member.getMember_no());
+		Shop shop = slist.get(0);
 		model.addAttribute("plist", plist);
+		model.addAttribute("shop", shop);
+		System.out.println(shop.getShop_name());
 		return "mainS";
 	}
 	
@@ -80,34 +90,36 @@ public class ShopController {
 		return service.getShop();
 	}
 	
-	@RequestMapping(value="mainInsertwish", method=RequestMethod.GET)	//위시 추가 (검색창에서)
-	public String mainInsertwish(@RequestParam("prod_no")int prod_no,@RequestParam("member_no") int mem_no,RedirectAttributes rttr) throws Exception{
-		
-		InsertDTO dto = new InsertDTO(prod_no, mem_no);
+	@RequestMapping(value="mainInsertwish", method=RequestMethod.GET)	//위시 추가 (검색창 밑에서)
+	public String mainInsertwish(HttpSession session, @RequestParam("prod_no")int prod_no,RedirectAttributes rttr) throws Exception{
+		System.out.println("mainInsertwish:"+prod_no);
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		WishDTO dto = new WishDTO(prod_no, mem_no);
 		int wish_no = 0;
 
 		if(checkWishList(mem_no, prod_no) != null) {		//있는지 확인여부
 			wish_no = checkWishList(mem_no, prod_no).getWishlist_no();
 			service.updateWish(wish_no);	//있을 시 날짜갱신
 		}else {
-			service.insertBtnWish(dto);		//없을 시 추가
+			service.insertWish(dto);		//없을 시 추가
 		}
 		List<WishDTO> wlist = getWishList(mem_no);
-		
-		Member member = new Member();
-		member = service.getMem(mem_no);
-
 		rttr.addFlashAttribute("wlist", wlist);
-		rttr.addFlashAttribute("member", member);
+
 
 		return "redirect:/main";
 	}
 	@RequestMapping(value="mainSearchBtn", method=RequestMethod.GET)		//위시 추가(버튼 클릭시)
-	public String mainSearchBtn(@RequestParam("keyval")String keyval,@RequestParam("member_no") int mem_no,RedirectAttributes rttr) throws Exception{
+	public String mainSearchBtn(HttpSession session, @RequestParam("keyval")String keyval, RedirectAttributes rttr) throws Exception{
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		
+		System.out.println("mainSearchBtn:"+keyval);
 		
 		InsertDTO dto = new InsertDTO(keyval, mem_no);
 		if(service.selectProductList(keyval) == null) {	
-			service.insertBtnWish(dto);
+			service.insertBtnWish(keyval);
 		}
 
 		WishDTO dto2 = new WishDTO();
@@ -126,25 +138,22 @@ public class ShopController {
 		service.insertWish(dto2);
 		}
 		List<WishDTO> wlist = getWishList(mem_no);
-		
-		Member member = new Member();
-		//member_no값으로 멤버객체 구하기
-		member = service.getMem(mem_no);
 
 		rttr.addFlashAttribute("wlist", wlist);
-		rttr.addFlashAttribute("member", member);
 
 		return "redirect:/main";
 	}
 	
 	@RequestMapping(value="removeWish", method=RequestMethod.GET)		//위시리스트 삭제
-	public String removeWish(int wish_no,@RequestParam("member_no") int mem_no, RedirectAttributes rttr) throws Exception{
+	public String removeWish(HttpSession session, int wish_no, RedirectAttributes rttr) throws Exception{
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		
 		service.deleteW(wish_no, mem_no);
 		List<WishDTO> wlist = getWishList(mem_no);
-		Member member = new Member();
-		member = service.getMem(mem_no);
+
 		rttr.addFlashAttribute("wlist", wlist);
-		rttr.addFlashAttribute("member", member);
+
 		return"redirect:/main";
 	}
 	
@@ -212,15 +221,16 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value="mak", method=RequestMethod.GET)		//근처 매장 갯수, 매장정보/현재좌표와의 거리/상품정보  리턴
-	@ResponseBody public List<MakLatLon> mak(@RequestParam("prod_no")int prod_no, double lat1, double lon1) throws Exception{
-		makLDTO makl = new makLDTO();
-		List<MakDTO> makL = service.makList(prod_no);		//물품을 가진 매장리스트 추출
-		List<MakLatLon> Mlalo = new ArrayList<MakLatLon>();		
+	@ResponseBody 
+	public List<MakLatLon> mak(@RequestParam("prod_no")int prod_no, double lat1, double lon1) throws Exception{
+			makLDTO makl = new makLDTO();
+				List<MakDTO> makL = service.makList(prod_no);		//물품을 가진 매장리스트 추출
+					List<MakLatLon> Mlalo = new ArrayList<MakLatLon>();		
 		MakLatLon malalo;
 		for(int i =0; i<makL.size();i++) {
 		double lat2 = makL.get(i).getShop_gps_latitude();
 		double lon2 = makL.get(i).getShop_gps_longitude();
-		double met = makl.distance(lat1, lon1, lat2, lon2);
+		double met = makl.distance(lat1, lon1, lat2, lon2);	// 47 == 4.7km
 		malalo = new MakLatLon();
 		malalo.setLat(lat2);
 		malalo.setLon(lon2);
@@ -304,6 +314,46 @@ public class ShopController {
 		}
 		
 		return Mlalo;
+	}
+	
+	@RequestMapping(value="distance", produces = "application/text; charset=utf8")		// 거리후 근처 상점 소팅
+	@ResponseBody public String distance(double lat, double lon, String callback,
+			@RequestParam(value="prod_name", required=false) String prod_name,@RequestParam(value="prod_no", defaultValue = "0") int prod_no) throws Exception{
+		System.out.println(prod_name);
+		if(prod_name != null) {
+			if(service.selectProductList(prod_name) == null) {	
+				service.insertBtnWish(prod_name);
+			}
+			prod_no = service.selectProductList(prod_name).getProduct_no();
+			System.out.println("distance들어옴");
+		}
+		
+		makLDTO makl = new makLDTO();	//거리계산 클래스
+		List<alrListDTO> alrL = service.alrList(prod_no);		//모든 상점, 상품번호, 좌표
+		
+
+		
+		for(int i =0; i<alrL.size();i++) {
+			double lat2 = alrL.get(i).getShop_gps_latitude();
+			double lon2 = alrL.get(i).getShop_gps_longitude();
+			double met = makl.distance(lat, lon, lat2, lon2);	//거리계산
+			System.out.println("dista거리 : "+met);
+				if(met>10000.0) {//10km
+					alrL.remove(i);
+				}
+			alrL.get(i).setMet(met);
+			alrL.get(i).setKey_no(prod_no);
+			}
+		String result = null;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		 try {
+			result=mapper.writeValueAsString(alrL);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return callback+"("+result+")";
 	}
 
 	private List<WishDTO> getWishList(int mem_no) throws Exception{		//위시리스트 불러오는 메소드

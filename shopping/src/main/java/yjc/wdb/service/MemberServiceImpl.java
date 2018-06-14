@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import yjc.wdb.domain.Member;
 import yjc.wdb.dto.LoginDTO;
+import yjc.wdb.dto.alrListDTO;
 import yjc.wdb.persistence.MemberDAO;
 
 
@@ -38,6 +39,18 @@ public class MemberServiceImpl implements MemberService {
 	public String getToken(String member_id) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.getToken(member_id);
+	}
+
+	@Override
+	public String getNoToken(int member_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getNoToken(member_no);
+	}
+
+	@Override
+	public void insertAlram(alrListDTO dto) throws Exception {
+		dao.insertAlram(dto);
+		
 	}
 
 

@@ -1,15 +1,16 @@
 var myLat;
 var myLot;
 $(document).ready(function(){
+//	distance(1);
 	firstGps();
 	firstMap();
 	setInterval(firstGps, 10*1000); //1000당 1초
 
-	$("#mainInputSearch").focus(function(){
+/*	$("#mainInputSearch").focus(function(){
 //		$(".dropdown-menu").css("display","block");
 //		$(".dropdown-menu").append("<tr class='resmenu'><td>최근등록상품</td></tr>");
 		
-	});
+	});*/
 	$("#mainInputSearch").blur(function(){
 		delay(function(){
 			$(".dropdown-menu").css("display","none");	
@@ -27,7 +28,8 @@ $(document).ready(function(){
 //			$(".dropdown-menu").append("<tr class='resmenu'><td>최근등록상품</td></tr>");
 		}
 		if($("#mainInputSearch").val()){
-			var query = {keyword:$("#mainInputSearch").val()};
+			var keyword = $("#mainInputSearch").val();
+			var query = {keyword:keyword};
 			delay(function(){
 				$(".resmenu").remove();
 				$.ajax({
@@ -39,8 +41,6 @@ $(document).ready(function(){
 							$(".dropdown-menu").append("<tr class='resmenu' id='tr["+data[i].wishlist_no+"]' style='width: 250px'>" 
 									+"<td width=77%>"+data[i].product_name+"</td>"
 									+"<td><button type='button' class='btn ins' value='"+data[i].product_no+"'>추가</button></td>"
-//									+"<td><button type='button' class='btn mak' value='"+data[i].product_no+"'><span class='glyphicon glyphicon-home'></span>5</button></td>" 
-//									+"<td><button type='button' class='btn str' value='"+data[i].product_no+"'>500m</button></td>"
 									+"</tr>");
 						}			
 					}
@@ -51,44 +51,37 @@ $(document).ready(function(){
 	});
 
 	$(document).on("click", ".ins", function(){
-		var mem_no = $('#mem_no').val();
+
 		var prod_no = this.value;
-//		alert(mem_no);
-//		$member = $(this).attr("member");
-//		alert($member.member_no);
-		/*
-		var query = {prod_no:this.value, member_no : $('#mem_id').val()};
-		$.ajax({
-			type:"POST",
-			url:"mainInsertwish",
-			data:query,
-			success:function(data) {
-//				window.location.href = "join";
-				//새로고침
-			}
-		});
-		*/
-		
-		self.location = "mainInsertwish?prod_no="+prod_no+"&member_no="+mem_no;
+		distance(parseInt(prod_no));
+		delay(function(){	
+			location.href = "mainInsertwish?prod_no="+prod_no;
+		}, 100);
 	});
 	
 	$("#mainSearch").on("click", function(){
-		var keyval =  encodeURIComponent($("#mainInputSearch").val());
-		var mem_no = $('#mem_no').val();
-		var id='seller';
+		var keyval = $("#mainInputSearch").val();
+		distance(keyval);
+		keyval =  encodeURIComponent(keyval);
+
 		if(keyval){
-			self.location="mainSearchBtn?member_no="+mem_no+"&keyval="+keyval;
+			delay(function(){	
+				self.location="mainSearchBtn?keyval="+keyval;
+			}, 100);
 		}
 		// 클릭시 알림보내기
 		 
 //		    keyval += '를 원하는 손님이 나타났습니다.'
-		    $.ajax({
-		    	type:"GET",
-		    	url:"pushToBuyer?searchText="+keyval+"&member_id="+id,
-				data:{},
-				success:function(data){	}
-		    });
+//		    $.ajax({
+//		    	type:"GET",
+//		    	url:"pushToBuyer?searchText="+keyval+"&member_id="+id,
+//				data:{},
+//				success:function(data){
+//					console.log("푸쉬완료");
+//				}
+//		    });
 	});
+	
 	var cnt = false;	
 	$(document).on("click", ".mak", function(){
 		console.log(cnt);
@@ -118,9 +111,7 @@ $(document).ready(function(){
 	});
 	
 	$(document).on("click", ".str", function(){
-		
-		var mem_no = $('#mem_no').val();
-		self.location="strMap?shop_no="+this.value+"&member_no="+mem_no+"&prod_no="+$(this).attr('id');
+		self.location="strMap?shop_no="+this.value+"&prod_no="+$(this).attr('id');
 	/*	
 		if($(this).html().equals("0m")) {
 			alert("근처에 매장이 없습니다.");
@@ -136,10 +127,10 @@ $(document).ready(function(){
 	
 	$(document).on("click", ".rem", function(){
 		var wno = this.value;
-		var mem_no = $('#mem_no').val();
+
 		var flag = confirm("삭제하시겠습니까?");
 		if(flag){
-			self.location="removeWish?wish_no="+wno+"&member_no="+mem_no;
+			self.location="removeWish?wish_no="+wno;
 		}
 	});
 	
@@ -174,7 +165,7 @@ var delay = (function(){
 
 	};
 
-	})();
+})();
 	
 function searchTime() {
 	setTimeout
@@ -228,6 +219,7 @@ function makMap(prod_no) {
 							var shop_lat = data[i].dto.shop_gps_latitude;
 							var shop_lon = data[i].dto.shop_gps_longitude;
 							var shop_home = data[i].dto.addr_si+data[i].dto.addr_gu+data[i].dto.addr_dong+data[i].dto.addr_bunzi;
+							var shop_bh = data[i].dto.shop_bh;
 							positions[i] = {
 									title: shop_name,
 									latlng :new daum.maps.LatLng(shop_lat,shop_lon),
@@ -246,7 +238,7 @@ function makMap(prod_no) {
 						    '            <div class="desc">' + 
 						    '                <div class="ellipsis">'+shop_home+'</div>' + 
 						    '  				 <div><a href=https://'+shop_home+'>홈페이지</a></div>' +
-						    '  				 <div>영업시간 : '+'매일 10시 ~ 22시'+'</div>'+		//영업시간 수정바람
+						    '  				 <div>영업시간 : '+shop_bh+'</div>'+		//영업시간 수정바람
 						    '            </div>' + 
 						    '        </div>' + 
 						    '    </div>' +    
@@ -286,7 +278,14 @@ function makMap(prod_no) {
 						$('.modal-title').html(data[0].dto.product_name+"을(를)파는 매장입니다.");
 						var str = '';
 						for(var i=0;i<data.length; i++) {
-							str+='<li class="modLi" value="'+data[i].dto.shop_no+'"> 매장명 : '+data[i].dto.shop_name+' 거리 : '+parseInt(data[i].met)*100+"m"+'</li>'
+							var met =parseInt(data[i].met);
+							var metStr = '';
+							if(met>1000) {
+								metStr = (met/1000).toFixed(2)+'km';
+							}else {
+								metStr = met+"m"; 
+							}
+							str+='<li class="modLi" value="'+data[i].dto.shop_no+'"> 매장명 : '+data[i].dto.shop_name+' 거리 : '+metStr+'</li>'
 						}
 						$('.modLi').remove();
 						$('#modUl').append(str);
@@ -349,7 +348,16 @@ function firstGps() {
  						if(minNo){
  							$(item).val(minNo);
  						}
- 						$(item).html(parseInt(min)*100+"m");
+ 						
+ 						var met =parseInt(min);
+						var metStr = '';
+						if(met>1000) {
+							metStr = (met/1000).toFixed(2)+'km';
+						}else {
+							metStr = met+"m"; 
+						}
+ 						
+ 						$(item).html(metStr);
  		
  						
  					}
@@ -378,7 +386,7 @@ function firstMap() {
 				data:{},
 				success:function(data){	
 					mapOp = {
-							center: new daum.maps.LatLng(fLat, fLon), // 지도의 중심좌표
+							center: new daum.maps.LatLng(fLat, fLon), // 지도의 중심좌표	, fLat은 현재위치
 					        level: 3 // 지도의 확대 레벨
 					}
 					map = new daum.maps.Map(document.getElementById('map'), mapOp);
@@ -524,168 +532,11 @@ function setMap(data) {
 var map;
 var mylat;
 var mylon;
-var marker=[];
-/*getLocation();
-
-function getLocation() {
-	//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	if (navigator.geolocation) {
-		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-		navigator.geolocation.getCurrentPosition(function(position) {
-
-			    mylat = position.coords.latitude // 위도
-			    mylon = position.coords.longitude; // 경도
-
-			locPosition = new daum.maps.LatLng(mylat, mylon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-
-			// 마커와 인포윈도우를 표시합니다
-			
-			aa(locPosition, message,mylat,mylon);
-			
-		});
-
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
-		var locPosition = new daum.maps.LatLng(33.450701, 126.570667), message = 'geolocation을 사용할수 없어요..'
-		
-	}		
-	
-	
-	
-	function aa(locPosition, message,mylat,mylon){
-		$("#map1").ready(function() {
-			//검색창에 엔터 입력시 좌표 검색
-
-			//변수 설정 및 최초 위치 설정
-			
-			var marker = '';
-    				
-			//지도 초기화
-			map = new daum.maps.Map(document.getElementById('map1'), {
-				center : new daum.maps.LatLng(mylat,mylon),
-				level :1,
-				mapTypeId : daum.maps.MapTypeId.ROADMAP
-			});
-	
-			var temp = new daum.maps.LatLng(mylat,mylon);
-			
-			
-			
-			var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-		    imageSize = new daum.maps.Size(50,50), // 마커이미지의 크기입니다
-		    imageOption = {offset: new daum.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정
-		    
-		 // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-		    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption),
-		        markerPosition = new daum.maps.LatLng(mylat,mylon); // 마커가 표시될 위치입니다
-			
-		      map.panTo(temp);   
-			//마커 찍어주기
-			marker = new daum.maps.Marker({	
-				position : markerPosition,
-				image: markerImage
-			});
-
-			marker.setMap(map);
-			
-		});
-		
-	}		
-}	*/
 
 
-var markers=[];
-var infowindow;
 var overlay;
 var overlays=[];
-function ohmy(splshop_name,splshop_homepage,whido,gyungdo){
 
-	var temp=new daum.maps.LatLng(whido,gyungdo);
-	
-	 function deg2rad(deg) {
-	        return deg * (Math.PI/180)
-	    }
-	
-	  var R = 6371; // Radius of the earth in km
-	    var dLat = deg2rad(whido-mylat);  // deg2rad below
-	    var dLon = deg2rad(gyungdo-mylon);
-	    var a = Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(deg2rad(mylat))*Math.cos(deg2rad(whido))*Math.sin(dLon/2)*Math.sin(dLon/2);
-	    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	    var d = R * c; // Distance in km
-	
-	
-	if(15.0>d){	
-	
-		
-	marker = new daum.maps.Marker({
-		position : temp
-	});
-		
-	
-
-	marker.setMap(map);
-	
-	markers.push(marker);
-	
-	
-	
-	var content = '<div class="wrap">' + 
-    '    <div class="info">' + 
-    '        <div class="title">' + 
-                splshop_name + 
-    '        </div>' + 
-    '        <div class="body">' + 
-    '            <div class="img">' +
-    '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-    '           </div>' + 
-    '            <div class="desc">' + 
-    '                <div class="ellipsis">'+'대구광역시 중구'+'</div>' + 
-    '   <div><a href=https://'+splshop_homepage+'>홈페이지</a></div>' +
-    '            </div>' + 
-    '        </div>' + 
-    '    </div>' +    
-    '</div>';
-     
-		
-//     '   <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
-    
-//     '   <div><a href='+splshop_homepage+'>홈페이지</a></div>' + 
-    
-	 overlay = new daum.maps.CustomOverlay({
-	    content: content,
-	    map: map,
-	    position: marker.getPosition()       
-	});
-
-	 overlay.setMap(map);
-	 overlays.push(overlay);
-	}
-	
-
-	return d;
-			
-	}
-
-function setOverlays(){			
-	for(var i=0; i<overlays.length;i++){
-		overlays[i].setMap(null);
-	}
-
-}
-
-function setMarkers(map){			
-	for(var i=0; i<markers.length;i++){
-		markers[i].setMap(map);
-//			infowindow[i].close();
-//			overlay.setMap(null);  
-	}
-
-}
-
-function hideMarkers(){	
-	setOverlays();
-	setMarkers(null);	   	
-}
 
 function relayout() {  
     // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
@@ -694,9 +545,61 @@ function relayout() {
     map.relayout();
     console.log(map+"ㅇㅇ");
 }
+function distance(prod) {
+	//좌표받기
 
+	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+        		function(position){
+        			myLat = position.coords.latitude; 
+        			myLon = position.coords.longitude; 
+        			var query;
 
-
-
-
+        			if(typeof prod == 'number'){
+        				query = {lat:myLat, lon:myLon, prod_no: prod};
+        			}else if( typeof prod == 'string'){
+        				query = {lat:myLat, lon:myLon, prod_name: prod};
+        			}
+        			
+        			$.ajax({
+        				url:"distance",
+        				data:query,
+        				dataType: 'jsonp',
+        				success:function(data){			//100000m이하 좌표, 거리, 매장번호, 상품번호 
+        					for(var i = 0; i< data.length; i ++) { 							//prod_no가 널이면 0
+        						
+//        						if(data[i].product_no == 0 && data[i].soldout_check == 0) {	//매장에 상품이 없음
+//        							console.log("매장번호: "+data[i].shop_no+"매장주인번호: "+data[i].member_no+data[i].product_no+"상품을 추가하시겠습니까?"+data[i].met);
+//        							alert("매장번호: "+data[i].shop_no+"매장주인번호: "+data[i].member_no+data[i].product_no+"상품을 추가하시겠습니까?"+data[i].met);
+//        						}else if((data[i].product_no == prod || data[i].product_name == prod )&& data[i].soldout_check == 0) {	//매장이 상품을 가지고있음
+//        							console.log("매장번호: "+data[i].shop_no+"매장주인번호: "+data[i].member_no+data[i].product_no+"상품을 찾습니다."+data[i].met);
+//        						}
+        						var query = data[i]; 
+        						 $.ajax({
+        							 	type:'post',
+        						    	url:"pushToSeller",
+        						    	headers:{
+        									"Content-Type" : "application/json",
+        									"X-HTTP-Method-Override" : "POST"
+        								},
+        								data:JSON.stringify(query),
+        								datatype:'text',
+        								success:function(result){
+        									console.log(result.shop_no);
+        									console.log("푸쉬완료");
+        								}
+        						    });
+        					}
+        				}
+        			
+        		 });
+        	 },
+        	 function (error) {
+        		 alert("에러");
+        	 }
+        		);
+    } else {
+        alert("해당 브라우저에선 현재위치를 찾을수가 없습니다.");
+    }
+}
 

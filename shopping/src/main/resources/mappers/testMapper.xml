@@ -59,6 +59,9 @@
 	<select id="getShopOne" resultType="Shop">
 		select * from shop where shop_no = #{shop_no}
 	</select>
+	<select id="getShopMem" resultType="Shop">
+		select * from shop where member_no = #{mem_no}
+	</select>
 	<select id="getProdOne" resultType="Product">
 		select * from product where product_no = #{prod_no}
 	</select>
@@ -100,6 +103,15 @@
 	wishlist.product_no IN
 	(select product_no from product	where product_name = #{product_name})
 		
+   </select>
+   
+   <select id="alrList" resultType="alrListDTO">
+   	select b.shop_no, b.member_no, b.shop_gps_longitude, b.shop_gps_latitude, a.soldout_check, a.product_no, c.product_name from shop_product a
+	inner join product c
+	on a.product_no = c.product_no
+	right outer join shop b
+	on a.product_no = #{prod_no}
+	and a.shop_no = b.shop_no
    </select>
 	
 </mapper>

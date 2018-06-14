@@ -153,6 +153,7 @@
 	<input type="hidden" id="hShop_lon" value="${shop.shop_gps_longitude }">
 	<input type="hidden" id="hShop_hom" value="${shop.shop_homepage }">
 	<input type="hidden" id="hShop_addr" value="${shop.addr_si } ${shop.addr_gu } ${shop.addr_dong } ${shop.addr_bunzi }">
+	<input type="hidden" id="hShop_bh" value="${shop.shop_bh}">
 </form>
 
 <footer class="container-fluid text-center">

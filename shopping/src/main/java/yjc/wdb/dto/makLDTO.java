@@ -18,7 +18,8 @@ public class makLDTO {
          
         dist = Math.acos(dist);
         dist = rad2deg(dist);
-         dist = dist * 1609.344; //미터로 변환
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1609.344; //미터
  
         return (dist);
     }

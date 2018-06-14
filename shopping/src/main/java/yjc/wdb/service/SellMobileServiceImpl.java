@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.dto.MakDTO;
+import yjc.wdb.dto.MyWishShopDTO;
 import yjc.wdb.dto.WishDTO;
 import yjc.wdb.persistence.SellMobileDAO;
 
@@ -61,5 +62,10 @@ public class SellMobileServiceImpl implements SellMobileService {
 		
 		return dao.AllShop();
 		
+	}
+
+	@Override
+	public List<MyWishShopDTO> MyWishShop(int mem_no) throws Exception {
+		return dao.MyWishShop(mem_no);
 	}
 }

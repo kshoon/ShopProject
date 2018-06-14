@@ -8,7 +8,9 @@ public class WishDTO{
 	private int wishlist_no;
 	private String product_name;
 	private Timestamp wishlist_date;
-	public void setInsert(int prod_no, int mem_no) {
+	public WishDTO() {}
+	
+	public WishDTO(int prod_no, int mem_no) {
 		this.product_no = prod_no;
 		this.member_no = mem_no;
 	}

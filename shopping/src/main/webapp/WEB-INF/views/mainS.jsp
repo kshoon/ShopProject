@@ -18,7 +18,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d7fa1315630f585572f6d7cd683066d&libraries=services"></script>
-  <script src='${pageContext.request.contextPath}/resources/js/mainS.js'></script>
   <style>  
     .navbar {
       margin-bottom: 0;
@@ -42,6 +41,9 @@
 		padding-top: 10px;
 	}
 
+	.sh1 {
+		letter-spacing: -2px; 
+	}
 
   </style>
 </head>
@@ -51,49 +53,14 @@
 
 
 <!-- 젤위에 -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container"> <!--전체 폭 -->
-    <div class="navbar-header"> <!--로고 -->
- 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <!-- <a class="navbar-brand" href="main">쇼핑깜빡이</a> -->
-	<a class="navbar-brand" href="main" style="font-family: 'Gugi', cursive; font-size: 2rem; color: white;"> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar"> <!-- 가운데 창 collapse??-->
-     
- 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-      </ul>
-       <div class="dropdown navbar-right">
-  			<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">내매장보기
-  			<span class="caret"></span></button>
-  			<ul class="dropdown-menu">
-	    		<li><a href="#">통합관리</a></li>
-    			<li><a href="#">A마트</a></li>
-    			<li><a href="#">B마트</a></li>
-  			</ul>
-		</div>
-		<ul class="nav navbar-nav navbar-right" style="color:white">
-       		<li style="padding-top:15px; padding-bottom:15px"> <span style="color:white; margin-left: 5px">${sessionScope.member.member_id }(${sessionScope.member.member_name })님 환영합니다.</span></li>
-      	</ul>
-    </div>
-  </div>
-</nav>
+<jsp:include page="seller/sellerNaviTop.jsp" />
 
-	<!-- 매장 선택 4개정도 -->
+
+ 
+	<!-- 메인화면 -->
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">A마트</div><!-- 1.div,form 2.table 3.버튼 -->
-			<div class="col-sm-6">B마트</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">C마트</div>
-			<div class="col-sm-6">D마트</div>
-		</div>
+		<h1 class="sh1">${shop.shop_name} 환영합니다.</h1>
+		
 		
 		
 		

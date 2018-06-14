@@ -177,7 +177,7 @@
 		<th>상품명</th>
 		<th>등록일</th>
 		<th>근처 매장</th>
-		<th>가까운 매장</th>
+		<th>최단거리 매장</th>
 		<th>삭제</th>
 	</tr>
    	<c:forEach items="${wlist}" var = "wlist">
@@ -190,12 +190,7 @@
 				<td> 
 						<button type='button' data-toggle="modal"  data-target="#myModal" class='btn mak' value="${wlist.product_no}">
 						<!--<span class='glyphicon glyphicon-home'></span>5  -->위치정보가 없습니다.</button>
-			<%-- 			<div class="makdiv">
-							<ul class="makul" id="wm_${wlist.wishlist_no }">
-								<li>
-								</li>
-							</ul>
-						</div>	 --%>				
+			
 				</td>
 				<td><button type='button' class='btn str' id="${wlist.product_no}"value="${wlist.product_no}">위치정보가 없습니다.</button></td>
 				<td><button type='button' class='btn rem' value="${wlist.wishlist_no}"><span class='glyphicon glyphicon-remove'></span></button></td>
@@ -203,39 +198,8 @@
 		</c:forEach>
 	
 		
-		
-		
-<%-- 		  	<c:forEach items="${sessionScope.wlist}" var = "wlist">
-			<tr>
 
-				<td>${sessionScope.wlist.product_name}</td>
-				<td>
-					<fmt:formatDate pattern="yyyy.MM.dd" value="${sessionScope.wlist.wishlist_date}"/>
-				</td>
-				
-				<td> 
-						<button type='button' class='btn mak' value="${sessionScope.wlist.product_no}">
-						<!--<span class='glyphicon glyphicon-home'></span>5  -->위치정보가 없습니다.</button>
-						<div class="makdiv">
-							<ul class="makul" id="wm_${sessionScope.wlist.wishlist_no }">
-								<li>
-								</li>
-							</ul>
-						</div>					
-				</td>
-				<td><button type='button' class='btn str' value="${sessionScope.wlist.product_no}">위치정보가 없습니다.</button></td>
-			</tr>
-		</c:forEach> --%>
 	</table>
-   <form>
-   
-   
-   <!--수정수정수정  -->
-  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
-
-  
-   </form>
     
   </div>
 </div>

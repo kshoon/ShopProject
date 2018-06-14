@@ -18,4 +18,15 @@
       where member_id=#{member_id}
       
    </select>
+   
+   <select id="getNoToken" resultType="java.lang.String">
+      select fcmToken
+      from member
+      where member_no=#{member_no}
+      
+   </select>
+   
+   <insert id="insertAlram">
+  		insert into alram(member_no, product_no, alram_content, alram_distance) values (#{member_no}, #{key_no}, #{content}, #{met})
+   </insert>
 </mapper>

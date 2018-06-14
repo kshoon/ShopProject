@@ -15,6 +15,7 @@ import yjc.wdb.dto.InsertDTO;
 import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
 import yjc.wdb.dto.WishDTO;
+import yjc.wdb.dto.alrListDTO;
 import yjc.wdb.persistence.ShopDAO;
 
 @Service
@@ -54,8 +55,8 @@ public class ShopServiceimpl implements ShopService {
 	}
 
 	@Override
-	public void insertBtnWish(InsertDTO dto) throws Exception {
-		dao.insertBtnWish(dto);
+	public void insertBtnWish(String keyval) throws Exception {
+		dao.insertBtnWish(keyval);
 		
 	}
 
@@ -118,6 +119,18 @@ public class ShopServiceimpl implements ShopService {
 	public int whisInProd(String product_name) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.whisInProd(product_name);
+	}
+
+	@Override
+	public List<Shop> getShopMem(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getShopMem(mem_no);
+	}
+
+	@Override
+	public List<alrListDTO> alrList(int prod_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.alrList(prod_no);
 	}
 
 

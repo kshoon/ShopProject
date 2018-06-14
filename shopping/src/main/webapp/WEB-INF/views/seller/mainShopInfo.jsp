@@ -44,65 +44,162 @@
 	.dropdown {
 		padding-top: 10px;
 	}
+	
+	
+	
+	/* ------매장정보 table style ----------*/
+	#infoTable {
+		padding-bottom: 3px;
+		font-size: 16px;
+	}
+	
+	#infoTable th, td {
+		padding-bottom: 15px;
+	}
+	
+	#infoTable th { 
+		text-align: left;
+		letter-spacing: 1.5px;
 
+	}
+	
+	#infoTable td input{
+		width: 100%;
+		border: 0;
+		outline: 0;
+		background: transparent;
+		border-bottom: 1px solid gray; 
+	}
+	
+	input:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0 30px white inset;
+	}
+	
+	#infoTable td input[readonly="readonly"] {
+		border-bottom: 1px solid black;
+		cursor: default;
+ 	}
+	
+	
+	/*수정 버튼*/
+	.modBtn {
+	    border: none;
+	    background-color: #e7e7e7;
+	    color: black;
+	    padding: 10px 32px; 
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 16px;
+	}
+	
+	.btn {
+		float: right; 
+	}
+	
+	
+	
 
   </style>
 </head>
 
 <body>
 
-
-
 <!-- 젤위에 -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container"> <!--전체 폭 -->
-    <div class="navbar-header"> <!--로고 -->
- 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <!-- <a class="navbar-brand" href="main">쇼핑깜빡이</a> -->
-	<a class="navbar-brand" href="main" style="font-family: 'Gugi', cursive; font-size: 2rem; color: white;"> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar"> <!-- 가운데 창 collapse??-->
-     
- 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-      </ul>
-       <div class="dropdown navbar-right">
-  			<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">내매장보기
-  			<span class="caret"></span></button>
-  			<ul class="dropdown-menu">
-	    		<li><a href="#">통합관리</a></li>
-    			<li><a href="#">A마트</a></li>
-    			<li><a href="#">B마트</a></li>
-  			</ul>
-		</div>
-		<ul class="nav navbar-nav navbar-right" style="color:white">
-       		<li style="padding-top:15px; padding-bottom:15px"> <span style="color:white; margin-left: 5px">${sessionScope.member.member_id }(${sessionScope.member.member_name })님 환영합니다.</span></li>
-      	</ul>
-    </div>
-  </div>
-</nav>
-
+<jsp:include page="sellerNaviTop.jsp" />
 	<!-- 매장 선택 4개정도 -->
 	<div class="container">
 		<div class="row"  style="padding-top: 40px">
 			<div class="col-sm-6" id="map" style="height: 400px"></div>
 			<div class="col-sm-6">
-				<form method="POST">		
-				<input type="hidden" name ="mem_no" value="${sessionScope.member.member_no }">
-				매장명<input type="text" name ="shop_name" id="shopName"> <br>
-				매장홈피	<input type="text" id="shopHp" name="shop_homepage"> <br>
-				설명	<input type="text" id="shopEx" name="shop_explain"> <br>
-				주소	<input type="text" id="shopAdr" name="shop_addr"> <br>
-				상세	<input type="text" id="shopBunzi" name="addr_bunzi"> <br>
-				사진	<input type="text" id="shopPi" name="shopPi"> <br>
-				
-				<button class='btn' id='shopMod'>수정</button>
+				<form class="form-horizontal" method="POST" style="margin-left:25px;">
+					<input type="hidden" name="mem_no"
+						value="${sessionScope.member.member_no }">
+					<!-- <div class="form-group">
+						<label>매장 이름  </label><input type="text" name="shop_name"
+							id="shopName">
+					</div>
+					<div class="form-group">
+						<label>매장 홈페이지 </label> <input type="text" id="shopHp"
+							name="shop_homepage">
+					</div>
+					<div class="form-group">
+						<label>매장 주소</label> <input type="text" id="shopAdr"
+							name="shop_addr">
+					</div>
+					<div class="form-group">
+						<label>상세 주소 </label> <input type="text" id="shopBunzi"
+							name="addr_bunzi">
+					</div>
+					<div class="form-group">
+						<label>영업 시간 </label> <input type="text" id="shopBh" name="shop_bh">
+					</div>
+					<div class="form-group">
+						<label>사진 </label> <input type="text" id="shopPi" name="shop_image">
+					</div>
+					
+					<div class="form-group">
+						<label>매장설명</label>
+						<textarea class="form-control" rows="3" id="shopEx"
+							name="shop_explain"> </textarea>
+					</div>
+
+					<button class='btn' id='shopMod'>수정</button>
 				</form>
+				
+				 -->
+				
+					<table style="width: 100%;" id="infoTable">
+						
+						<tr>
+							<th colspan="2"> 매장 이름 </th>
+							<td colspan="4"> <input type="text" name="shop_name" id="shopName" readonly="readonly"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="2"> 매장 홈페이지 </th>
+							<td colspan="4"> <input type="text" id="shopHp" name="shop_homepage"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="2"> 매장 주소 </th>
+							<td colspan="4"> <input type="text" id="shopAdr" name="shop_addr"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="2"> 상세 주소 </th>
+							<td colspan="4"> <input type="text" id="shopBunzi" name="addr_bunzi"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="2"> 영업 시간 </th>
+							<td colspan="4"> <input type="text" id="shopBh" name="shop_bh"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="2"> 매장 사진 </th>
+							<td colspan="4"> <input type="text" id="shopPi" name="shop_image"> </td>
+						</tr>
+						
+						<tr>
+							<th colspan="6" style="padding-bottom: 5px"> 매장 설명 </th>
+						</tr>
+						
+						<tr>
+							<td colspan="6"> <textarea class="form-control" rows="3" id="shopEx" name="shop_explain"> </textarea> </td>
+						</tr>
+						
+					</table>
+				
+				<div class="btn">
+					<button class='modBtn' id='shopMod'> 매장 정보 수정</button>
+				</div>
+				
+				</form>
+				
+				
+				
+				<br><br><p>	홈페이지, 번지, 영업시간 수정가능</p>
 			</div>
 		</div>
 	</div>

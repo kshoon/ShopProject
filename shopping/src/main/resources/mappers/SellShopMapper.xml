@@ -8,7 +8,7 @@
 	</select>
 	
 	<update id="updateShop">
-		update shop set shop_homepage = #{shop_homepage}, addr_bunzi = #{addr_bunzi} where shop_no = #{shop_no}
+		update shop set shop_homepage = #{shop_homepage}, addr_bunzi = #{addr_bunzi}, shop_bh = #{shop_bh} where shop_no = #{shop_no}
 	</update>
 	
 	<select id="getProd" resultType="Product">
@@ -16,7 +16,63 @@
 		inner join product p1
 		on s1.product_no =  p1.product_no
 		where s1.shop_no = #{shop_no}
+		and s1.soldout_check = 0
 		order by p1.product_name
 	</select>
 	
+	<delete id="deleteSPP">
+		delete from shop_product where product_no = #{prod_no} and shop_no = #{shop_no}
+	</delete>
+	
+	<update id="updateSPU">
+		update shop_product set soldout_check = 1 where product_no = #{prod_no} and shop_no = #{shop_no}
+	</update>
+	
+	<select id="plist" resultType="Product">
+		select p.product_no, p.product_name
+		from product p
+		LEFT JOIN (select * from shop_product where shop_no = #{shop_no})sp on p.product_no = sp.product_no 
+		where sp.product_no is null
+		order by p.product_name		
+	</select>
+	
+	<insert id="insertSPP">
+		insert into shop_product(shop_no, product_no) values (#{shop_no}, #{prod_no})
+	</insert>
+
+	<select id="shopSellWish" resultType="Ssw">	<!--매장이 파는 위시  -->
+		select w.product_no, p.product_name, count(w.product_no) as countP
+		from wishlist w
+		inner join shop_product sp
+		on w.product_no = sp.product_no
+		inner join product p
+		on w.product_no = p.product_no
+		where sp.shop_no = #{shop_no}
+		group by w.product_no
+		order by countP desc, p.product_name
+	</select>
+	
+	<select id="shopprodMem" resultType="int"> <!-- 매장이 가진 물건을 원하는 멤버 리스트  -->
+		select w.member_no from shop_product sp, wishlist w
+		where sp.product_no = w.product_no
+		and sp.shop_no = #{shop_no}
+		and w.product_no= #{product_no}			
+	</select>
+	
+	<select id="getSold" resultType="Product">
+		select s1.product_no, p1.product_name from shop_product s1
+		inner join product p1
+		on s1.product_no =  p1.product_no
+		where s1.shop_no = #{shop_no}
+		and s1.soldout_check = 1
+		order by p1.product_name
+	</select>
+	
+	<update id="updateSPUO">
+		update shop_product set soldout_check = 0 where product_no = #{prod_no} and shop_no = #{shop_no}
+	</update>
+	
+	<select id="getAlram" resultType="Alram">
+		select * from alram where member_no = #{mem_no}
+	</select>
 </mapper>

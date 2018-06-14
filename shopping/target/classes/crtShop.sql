@@ -57,3 +57,16 @@ alarm_check char(1) default 0,
 constraint foreign key (member_no) references member(member_no),
 constraint foreign key (product_no) references product(product_no)
 )
+
+
+create table alram (
+alram_no int auto_increment primary key,
+member_no int not null,
+product_no int not null,
+alram_read CHAR(1) default 0,
+alram_content TEXT not null,
+alram_date timestamp default now(),
+alram_distance int not null,
+constraint foreign key (member_no) references member(member_no),
+constraint foreign key (product_no) references product(product_no)
+)

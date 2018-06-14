@@ -18,6 +18,7 @@ import yjc.wdb.dto.InsertDTO;
 import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
 import yjc.wdb.dto.WishDTO;
+import yjc.wdb.dto.alrListDTO;
 import yjc.wdb.dto.makLDTO;
 
 @Repository
@@ -59,9 +60,8 @@ public class ShopDAOimpl implements ShopDAO {
 	}
 
 	@Override
-	public void insertBtnWish(InsertDTO dto) throws Exception {
-		System.out.println("ㅎㅇ");
-		session.insert(NAMESPACE+".insertB",dto);		
+	public void insertBtnWish(String keyval) throws Exception {
+		session.insert(NAMESPACE+".insertB",keyval);		
 	}
 
 	@Override
@@ -129,6 +129,18 @@ public class ShopDAOimpl implements ShopDAO {
 	public int whisInProd(String product_name) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(NAMESPACE +".whisInProd", product_name);
+	}
+
+	@Override
+	public List<Shop> getShopMem(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".getShopMem", mem_no);
+	}
+
+	@Override
+	public List<alrListDTO> alrList(int prod_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".alrList", prod_no);
 	}
 
 	
