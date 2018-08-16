@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 import yjc.wdb.domain.Alram;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
+import yjc.wdb.dto.ShopSearchDTO;
 import yjc.wdb.dto.shopSellWishDTO;
+import yjc.wdb.dto.wishNewDTO;
 
 
 
@@ -83,6 +85,21 @@ public class SellShopDAOimpl implements SellShopDAO {
 	@Override
 	public List<Alram> getAlram(int mem_no) throws Exception {
 		return session.selectList(NAMESPACE+".getAlram", mem_no);
+	}
+	@Override
+	public List<Product> getPWlist(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".pwlist", shop_no);
+	}
+	@Override
+	public void remAlr(int alram_no) throws Exception {
+		session.delete(NAMESPACE+".remAlr", alram_no);
+		
+	}
+	@Override
+	public List<Product> IpSearch(int shop_no, String keyword) throws Exception {
+		ShopSearchDTO ssdto = new ShopSearchDTO(shop_no, keyword);
+		return session.selectList(NAMESPACE+".insertPsearch",ssdto);
 	}
 	
 

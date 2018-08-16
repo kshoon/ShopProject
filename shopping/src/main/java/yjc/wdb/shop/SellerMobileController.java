@@ -177,4 +177,40 @@ public class SellerMobileController {
 		
 		return callback+"("+result+")";
 	}
+	@RequestMapping(value="BookWishShop" , produces = "application/text; charset=utf8")		// 내 위시 물품 파는 매장
+	@ResponseBody String BookWishShop (int mem_no, String callback) throws Exception{
+		List<MyWishShopDTO> list = service.BookWishShop(mem_no);
+		String result = null;
+		ObjectMapper mapper = new ObjectMapper();
+
+		
+		 try {
+				result=mapper.writeValueAsString(list);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return callback+"("+result+")";
+	}
+	
+	@RequestMapping(value="CheckBook" , produces = "application/text; charset=utf8")		// 내 위시 물품 파는 매장
+	@ResponseBody String CheckBook (int mem_no, String callback) throws Exception{
+		int chk = service.CheckBook(mem_no);
+		String result = null;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if(chk>0) {
+			result = "o";
+		}else {
+			result = "x";
+		}
+		 try {
+				result=mapper.writeValueAsString(result);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return callback+"("+result+")";
+	}
 }

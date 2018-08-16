@@ -103,3 +103,12 @@ var delay = (function(){
 function searchTime() {
 	setTimeout
 }
+
+
+
+
+
+
+
+
+

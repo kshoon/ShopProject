@@ -24,44 +24,61 @@
 		</script>
   <script src='${pageContext.request.contextPath}/resources/js/mainShop.js'></script>
   <style>  
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color:black;
-    }
 
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    th {
-   	 font-weight: bold;
-   	  text-align: center;
-    }
-    body { padding-top: 50px; }
-    
-
-	.dropdown {
-		padding-top: 10px;
+	p {
+		font-size : 1.8rem;
 	}
-
-
+	a {
+		color : black;
+	}
+	a:hover {
+		color : black;	
+	}
+	#navi2{
+		background-color: thistle;
+	}
   </style>
 </head>
-
+<script>
+	var navi = 2;
+</script>
 <body>
 
 
 
 <!-- 젤위에 -->
 <jsp:include page="sellerNaviTop.jsp" />
-
+	
 	<!--상품관리 -->
-	<div class="container" style="padding-top: 40px">
+<section id="#wrap_area">
+ 	<div id="left_area">
+ 		<jsp:include page="sellerNaviLeft.jsp" />
+ 	</div>
+	<div id="right_area">
+	
+
+		<div class="row content" id="midvar">
+			 <div class="col-sm-3" style="background:lavender;">
+				<a href="mainShopProd"> 보유상품</a>
+			 </div>
+			 <div class="col-sm-3">
+				<a href="mainShopInsertPW">  상품추가(추천) </a>
+			 </div>
+			 <div class="col-sm-3">
+				<a href="mainShopInsertP">  상품추가(전체)	</a>
+			 </div>
+			 <div class="col-sm-3">
+				<a href="mainShopSold">  차단상품	</a>
+			 </div>
+		</div>
+			<h2>&gt;&gt;&gt;&gt;&nbsp;매장이 보유한 상품들 입니다.</h2>
+			<h3>
+			<span class="glyphicon glyphicon-remove"style="color:black;"></span>로 삭제,
+			<span class="glyphicon glyphicon-ban-circle"style="color:black;"></span>로 알림이 안뜨게 할수 있습니다.
+			</h3>
 		<ul class="nav nav-tabs">
 			<li class="nav-item nav-link active"><a href="#" class='shopNavi' id='naviAll'>전체</a></li>
-    		<li class="nav-item nav-link"><a href="#" class='shopNavi' id='naviA'>ㄱ</a></li>
+    		<li><a href="#" class='shopNavi' id='naviA'>ㄱ</a></li>
     		<li><a href="#" class='shopNavi' id='naviB'>ㄴ</a></li>
     		<li><a href="#" class='shopNavi' id='naviC'>ㄷ</a></li>
     		<li><a href="#" class='shopNavi' id='naviD'>ㄹ</a></li>
@@ -82,12 +99,12 @@
     		<li><a href="#" class='shopNavi' id='naviS'>U~Z</a></li>
     		<li><a href="#" class='shopNavi' id='naviT'>0~9</a></li>
   		</ul>
-			<p>이름 | 삭제 | 품절</p>
+  		
 			<c:forEach items="${plist}" var = "plist">
 			
 				<c:if test="(plist.index%4)==1">		<div class="row"></c:if>
-				<div class="col-sm-3">
-					<p>${plist.product_name} 
+				<div class="col-sm-3" style="padding-top:5px;">
+					<p style="font-size:24px;">${plist.product_name} 
 						<a href="#" onclick="SPProdclick('${plist.product_no}','${member.member_no }'); return false;">
 							<span class="glyphicon glyphicon-remove"style="color:black;"></span>
 							
@@ -102,33 +119,8 @@
 			</c:forEach>
 		
 	</div>
-	
-	
-	<div class="container">
-	<jsp:include page="sellerNavi.jsp" />
-	</div>
+</section>
 
-<footer class="container-fluid text-center">
-   <form>
-      
-   <!--수정수정수정  -->
-  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
 
-   </form>
-	<div class="container">
-    <hr>
-        <div class="text-center center-block">
-            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
-            <br />
-                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-			</div>
-    <hr>
-	</div>
-
-</footer>
 </body>
 </html>

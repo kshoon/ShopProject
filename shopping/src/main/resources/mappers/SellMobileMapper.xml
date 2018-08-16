@@ -70,5 +70,16 @@
 		and s1.product_no = p1.product_no
 		and w1.member_no =  #{mem_no}
 	</select>
-	
+	<select id ="BookWishShop" resultType="MWSDTO">
+		select s1.shop_no, s2.shop_name, s2.shop_gps_longitude, s2.shop_gps_latitude, p1.product_no,p1.product_name
+		from shop_product s1, wishlist w1, shop s2, product p1, bookmark b
+		where s1.shop_no = s2.shop_no
+		and s1.product_no = w1.product_no
+		and s1.product_no = p1.product_no
+		and s2.shop_no = b.shop_no
+		and w1.member_no =  2
+	</select>
+	<select id="CheckBook" resultType="int">
+		select count(shop_no) from bookmark where member_no = #{mem_no}
+	</select>
 </mapper>

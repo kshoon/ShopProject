@@ -1,6 +1,58 @@
 @charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+*{
+	font-family:  'Jeju Gothic', sans-serif;
+}
+    body {
+    	padding-top: 50px;
+    	 
+    	/* background-color: lightgray !important;  */
+    }
+    th {
+   		font-weight: bold;
+   		text-align: center;
+    }
 
+	
+	.dropdown {
+		padding-top: 10px;
+	}
+	.container{
+		background-color: white;
+	}
+	.navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color:mediumslateblue !important;
+    }
 
+	.navbar-brand > span {
+		font-family: 'Gugi', cursive ;
+	}
+	#midvar{	
+		font-size:2rem;
+		text-align: center;
+	}
+
+	#midvar > div:nth-child(-n+3) {
+		border-right : 2px solid gray;
+		
+	}
+	
+	#wrap_area{overflow:hidden; position:relative; width:1000px; margin:0 auto;}
+	#left_area{position:absolute; top:0px; left:0px; bottom:0px; width:15%; background:rgb(254,254,254);font-size:2rem;}
+	#right_area{float:right;  display:block; width:85%; min-height:900px; padding-right:15%; padding-left:30px;}
+	
+	
+	#midvar {
+		padding-top : 25px;
+		margin-bottom:50px;
+	}
+	.nav-tabs{
+		font-size:22px;
+		margin-top:15px !important;
+		margin-bottom: 10px !important;
+	}
 /* Tiles */
 
 	.tiles {
@@ -14,6 +66,7 @@
 		flex-wrap: wrap;
 		postiion: relative;
 		margin: -2.5em 0 0 -2.5em;
+		padding-bottom: 30px;
 	}
 
 		.tiles article {

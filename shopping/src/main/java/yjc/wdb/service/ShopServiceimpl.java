@@ -6,11 +6,14 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import yjc.wdb.domain.Alram;
+import yjc.wdb.domain.Bookmark;
 import yjc.wdb.domain.Member;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.SearchKeyword;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.domain.Wishlist;
+import yjc.wdb.dto.GpsDTO;
 import yjc.wdb.dto.InsertDTO;
 import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
@@ -132,6 +135,78 @@ public class ShopServiceimpl implements ShopService {
 		// TODO Auto-generated method stub
 		return dao.alrList(prod_no);
 	}
+
+	@Override
+	public List<String> ShopPName(int shop_no, int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.ShopPName(shop_no, mem_no);
+	}
+
+	@Override
+	public List<Integer> wishPno(int prod_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.wishPno(prod_no);
+	}
+
+	@Override
+	public void InsAlrTest(Alram alram) throws Exception {
+		dao.InsAlrTest(alram);
+		
+	}
+
+	@Override
+	public int prodName(String product_name) throws Exception {
+		return dao.prodName(product_name);
+	}
+
+	@Override
+	public List<WishDTO> wishNew(int member_no, String order) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.wishNew(member_no, order);
+	}
+
+	@Override
+	public List<Shop> modSearch(String opt, String keyval) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.modSearch(opt, keyval);
+	}
+
+	@Override
+	public void insertBm(int mem_no, int shop_no) throws Exception {
+		dao.insertBm(mem_no,shop_no);
+		
+	}
+
+	@Override
+	public void deleteBm(int mem_no, int shop_no) throws Exception {
+		dao.deleteBm(mem_no,shop_no);
+		
+	}
+
+	@Override
+	public List<Bookmark> selectBm(int mem_no) throws Exception {
+		return dao.selectBm(mem_no);
+		
+	}
+
+	@Override
+	public int selectBm1(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectBm1(mem_no);
+	}
+
+	@Override
+	public List<Shop> selectBookSN(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectBookSN(mem_no);
+	}
+
+	@Override
+	public GpsDTO selectGps(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectGps(shop_no);
+	}
+
 
 
 

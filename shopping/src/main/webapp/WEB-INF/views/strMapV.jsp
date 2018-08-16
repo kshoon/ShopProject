@@ -33,6 +33,7 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d7fa1315630f585572f6d7cd683066d&libraries=services"></script>
   <script src='${pageContext.request.contextPath}/resources/js/mainStr.js'></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/logo.css" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -154,6 +155,7 @@
 	<input type="hidden" id="hShop_hom" value="${shop.shop_homepage }">
 	<input type="hidden" id="hShop_addr" value="${shop.addr_si } ${shop.addr_gu } ${shop.addr_dong } ${shop.addr_bunzi }">
 	<input type="hidden" id="hShop_bh" value="${shop.shop_bh}">
+	<input type="hidden" id="hShop_explain" value="${shop.shop_explain}">
 </form>
 
 <footer class="container-fluid text-center">

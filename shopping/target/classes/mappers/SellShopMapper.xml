@@ -36,6 +36,15 @@
 		order by p.product_name		
 	</select>
 	
+	<select id="pwlist" resultType="Product">
+		select DISTINCT wishlist.product_no, p.product_name
+		from wishlist
+		LEFT JOIN (select * from shop_product where shop_no = #{shop_no})sp on wishlist.product_no = sp.product_no 
+		inner JOIN product p 
+		on wishlist.product_no = p.product_no
+		where sp.product_no is null		
+	</select>
+	
 	<insert id="insertSPP">
 		insert into shop_product(shop_no, product_no) values (#{shop_no}, #{prod_no})
 	</insert>
@@ -48,6 +57,7 @@
 		inner join product p
 		on w.product_no = p.product_no
 		where sp.shop_no = #{shop_no}
+		and sp.soldout_check = 0
 		group by w.product_no
 		order by countP desc, p.product_name
 	</select>
@@ -74,5 +84,17 @@
 	
 	<select id="getAlram" resultType="Alram">
 		select * from alram where member_no = #{mem_no}
+	</select>
+	<delete id="remAlr">
+		delete from alram where alram_no = #{alram_no}
+	</delete>
+	
+	<select id="insertPsearch" resultType="Product">
+		select p.product_no, p.product_name
+		from product p
+		LEFT JOIN (select * from shop_product where shop_no = #{shop_no})sp on p.product_no = sp.product_no 
+		where sp.product_no is null
+		and product_name like CONCAT('%', #{keyword}, '%')
+		order by product_name;
 	</select>
 </mapper>

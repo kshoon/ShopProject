@@ -43,6 +43,9 @@
 					<exclude-mapping path="/map2"/>
 					<exclude-mapping path="/mak"/>
 					<exclude-mapping path="/MyWishShop"/>
+					<exclude-mapping path="/BookWishShop"/>
+					<exclude-mapping path="/CheckBook"/>
+					<exclude-mapping path="/asdf"/>
 				<beans:ref bean="authInterceptor" />
 			</interceptor> 
 		
@@ -52,7 +55,7 @@
 		
 		
 	
-	<context:component-scan base-package="yjc.wdb.shop, yjc.wdb.persistence, yjc.wdb.service, yjc.wdb.dto" />
+	<context:component-scan base-package="yjc.wdb.shop, yjc.wdb.persistence, yjc.wdb.service, yjc.wdb.dto, yjc.wdb.domain" />
 	
 	
 	

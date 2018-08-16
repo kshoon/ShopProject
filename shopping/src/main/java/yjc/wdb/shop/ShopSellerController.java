@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yjc.wdb.domain.Alram;
@@ -67,6 +68,7 @@ public class ShopSellerController {
 		int shop_no = list.get(0).getShop_no();
 		List<shopSellWishDTO> plist = service.shopSellWish(shop_no);
 		model.addAttribute("plist", plist);
+		model.addAttribute("slist", list.get(0));
 		return "seller/mainShopNearW";
 	}
 	
@@ -88,6 +90,39 @@ public class ShopSellerController {
 			System.out.println("모델1");
 		}
 		return "seller/mainShopInsertP";
+	}
+	
+	@RequestMapping(value="mainShopInsertPSearch", method=RequestMethod.GET)		//상품 추가
+	public String mainShopInsertPSearch(HttpSession session,String keyword, Model model) throws Exception{
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		List<Shop> list = service.myshop(mem_no); //리스트이지만 매장이 한개라고 가정 한개만 쓰도록 하겠음
+		
+		int shop_no = list.get(0).getShop_no();
+		List<Product> plist = service.IpSearch(shop_no, keyword);
+		System.out.println(plist.size());
+		model.addAttribute("plist", plist);
+		return "seller/mainShopInsertP";
+	}
+	
+	@RequestMapping(value="mainShopInsertPW", method=RequestMethod.GET)		//상품 추가
+	public String mainShopInsertPW(HttpSession session,String id, Model model) throws Exception{
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		List<Shop> list = service.myshop(mem_no); //리스트이지만 매장이 한개라고 가정 한개만 쓰도록 하겠음
+		
+		int shop_no = list.get(0).getShop_no();
+		
+		List<Product> plist = service.getPWlist(shop_no);
+		if (id != null && id != "") {
+			List<Product> plist2 = uniPlist(plist, id);
+			model.addAttribute("plist", plist2);
+			System.out.println("모델2");
+		}else {
+			model.addAttribute("plist", plist);
+			System.out.println("모델1");
+		}
+		return "seller/mainShopInsertPW";
 	}
 	
 	@RequestMapping(value="mainShopSold", method=RequestMethod.GET)		//판매자 상품관리
@@ -116,8 +151,11 @@ public class ShopSellerController {
 	
 	
 	
-	
-	
+
+	@RequestMapping(value="alramRem", method=RequestMethod.GET)		//알람 삭제
+	@ResponseBody public void alramRem(int alram_no) throws Exception{
+		service.remAlr(alram_no);
+	}	
 	
 	
 	

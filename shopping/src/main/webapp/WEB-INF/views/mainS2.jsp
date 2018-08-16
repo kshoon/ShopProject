@@ -10,14 +10,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/logo.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainS.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d7fa1315630f585572f6d7cd683066d&libraries=services"></script>
-  <script src='${pageContext.request.contextPath}/resources/js/mainS.js'></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
+  <style>  
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -35,88 +36,78 @@
     }
     body { padding-top: 50px; }
     
-    .form-inline{
-    	margin : 10px;
-    }
-    #Search {
-    	text-align : center;
-    }
-    #con2{
-    	background-color:gray;
-    }
-    .dropdown-menu{
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 360px;
-    min-height: 50px;
 
-    z-index: 99;
-    }
-    .makdiv{
-    	background-color:white;
-    	position:absolute;
-        z-index: 1;
-        min-width:0;
-        min-height:0;
-        left:60%;
-
-    }
-	ul.makul {
-	        min-width:0;
-        min-height:0;
-    list-style-type: none;
-    margin: 3px;
-    padding: 3px;
+	.dropdown {
+		padding-top: 10px;
 	}
+
+	.sh1 {
+		letter-spacing: -2px; 
+	}
+
   </style>
 </head>
-
+<script>
+/* document.location.href="mainShopNearW"; */
+</script>
 <body>
 
 
-
 <!-- 젤위에 -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container"> <!--전체 폭 -->
-    <div class="navbar-header"> <!--로고 -->
- 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="main">쇼핑깜빡이</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar"> <!-- 가운데 창 collapse??-->
-     
+<jsp:include page="seller/sellerNaviTop.jsp" />
+	<div class="row">
+		<div class="col-sm-3">
+    		<a href="main">홈으로</a>
+    	</div>
+   		 <div class="col-sm-3">
+    		<a href="mainShopProd">내 상품 관리</a>
+   		</div>
+    	<div class="col-sm-3">
+    		<a href="mainShopInfo">매장 정보 관리</a>
+    	</div>
+    	<div class="col-sm-3">
+    		<a href="mainShopAlram">알림보관함</a>
+    	</div>
+    	<div class="col-sm-3">
+    		<a href="getQR?code=shop&width=300&height=300">코드생성</a>
+    	</div>
+	</div>
+
  
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-      </ul>
-		<ul class="nav navbar-nav navbar-right" style="color:white">
-       		<li style="padding-top:15px; padding-bottom:15px"> <span style="color:white; margin-left: 5px">${sessionScope.member.member_name }님 환영합니다.</span></li>
-       		<li style="margin-left: 5px"> <a href="push/sendPush"> 알림발송 </a> </li>
-      	</ul>
-      	
-    </div>
-  </div>
-</nav>
-	<!-- 판매자 근처 위시 보는 칸 -->
+	<!-- 메인화면 -->
 	<div class="container">
-		<!-- 푸시하는곳으로 -->
+		<h1 class="sh1">${shop.shop_name} 환영합니다.</h1>
+		
 		
 		
 		
 	</div>
-
+	
+	<div class="container">
+		<jsp:include page="seller/sellerNavi.jsp" />
+	</div>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
-      아이디: ${member.member_id} <br>	
-   번호 : ${sessionScope.member.member_no } <br>
    <form>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">  
+      
+   <!--수정수정수정  -->
+  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
+  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
+
    </form>
+	<div class="container">
+    <hr>
+        <div class="text-center center-block">
+            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
+            <br />
+                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+			</div>
+    <hr>
+	</div>
+
 </footer>
 </body>
 </html>

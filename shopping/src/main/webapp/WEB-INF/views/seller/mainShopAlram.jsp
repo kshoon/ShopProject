@@ -25,28 +25,27 @@
 		</script>
   <script src='${pageContext.request.contextPath}/resources/js/mainShop.js'></script>
   <style>  
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color:black;
-    }
 
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    th {
-   	 font-weight: bold;
-   	  text-align: center;
-    }
-    body { padding-top: 50px; }
-    
-
-	.dropdown {
-		padding-top: 10px;
+	td {
+	  font-size : 1.8rem;
 	}
-
+	tr {
+		line-height : 200%;
+	}
+	
+	
+	#atable td {
+		padding-top: 15px;
+		line-height: 20px;
+	}
+	.Cwhite{
+		background-color: mediumslateBlue;
+		color:white;
+	}
+	#navi4{
+		background-color: thistle;
+	}
+	
   </style>
 </head>
 
@@ -55,7 +54,11 @@
 <!-- 젤위에 -->
 <jsp:include page="sellerNaviTop.jsp" />
 
-	<div class="container">
+	<section id="#wrap_area">
+ 	<div id="left_area">
+ 		<jsp:include page="sellerNaviLeft.jsp" />
+ 	</div>
+	<div id="right_area">
   		<div class="row content">
    			 <div class="col-sm-3 sidenav">
       			<br><br>
@@ -65,17 +68,17 @@
   		<div class="col-sm-9">
   	
      		 
-     		<button class='btn' id="allCheckBtn"><input type="checkbox" id='allCheck'></button>
-     		<button class='btn' id="refreshBtn"><span class="glyphicon glyphicon-refresh"></span></button>
-     		<button class='btn' id="alramOkBtn"><span class="glyphicon glyphicon-ok"></span></button>
-     		<button class='btn' id="alramTrashBtn"><span class="glyphicon glyphicon-trash"></span></button>
+     		<button class='btn Cwhite' id="allCheckBtn"><input type="checkbox" id='allCheck'></button>
+     		<button class='btn Cwhite' id="refreshBtn"><span class="glyphicon glyphicon-refresh Cwhite"></span></button>
+     		<button class='btn Cwhite' id="alramOkBtn"><span class="glyphicon glyphicon-ok Cwhite"></span></button>
+     		<button class='btn Cwhite' id="alramTrashBtn"><span class="glyphicon glyphicon-trash Cwhite"></span></button>
       		<hr>
-      		<table>
+      		<table id="atable" style="width: 100%">
 
       			<c:forEach items="${alist}" var = "alist">
       				<tr>
-      					<td> <input type="checkbox" name='alramCheck' value='${alist.alram_no}'> </td>
-      					<td> ${alist.alram_content}
+      					<td style="border-bottom: 1px solid gray"> <input type="checkbox" name='alramCheck' value='${alist.alram_no}'> </td>
+      					<td style="border-bottom: 1px solid gray"> ${alist.alram_content}
       					
       					<c:set var="conC" value="${alist.alram_content}"/>
 
@@ -86,38 +89,20 @@
       					
       					
       					<c:if test="${subS eq '?'}">
-      					<td> 추가</td>
+      					<td class="alrIns" style="border-bottom: 1px solid gray;" data-alrNo='${alist.alram_no}'>
+      						<span class="glyphicon glyphicon-ok" ></span>
+      					</td>
       					</c:if> 
-      					<td> 삭제</td>
+      					<td class="alrRem" style="border-bottom: 1px solid gray;" data-alrNo='${alist.alram_no}'>
+      						<span class="glyphicon glyphicon-trash"></span>
+      					</td>
       				</tr>
       			</c:forEach>
       		</table>
     	</div>
  		</div>
 	</div>
+	</section>
 	
-	<div class="container">
-	<jsp:include page="sellerNavi.jsp" />
-	</div>
-
-<footer class="container-fluid text-center">
-   <form>      
-   <!--수정수정수정  -->
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
-   </form>
-	<div class="container">
-    <hr>
-        <div class="text-center center-block">
-            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
-            <br />
-                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-			</div>
-    <hr>
-	</div>
-
-</footer>
 </body>
 </html>

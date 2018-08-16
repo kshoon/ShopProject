@@ -18,4 +18,6 @@ public interface SellMobileDAO {
 	void ShopProductRem(int shop_no, int prod_no) throws Exception;
 	public List<Shop> AllShop() throws Exception;
 	List<MyWishShopDTO> MyWishShop(int mem_no) throws Exception;
+	List<MyWishShopDTO> BookWishShop(int mem_no) throws Exception;
+	int CheckBook(int mem_no) throws Exception;
 }

@@ -24,29 +24,31 @@
 		</script>
   <script src='${pageContext.request.contextPath}/resources/js/mainShop.js'></script>
   <style>  
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color:black;
-    }
-
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    th {
-   	 font-weight: bold;
-   	  text-align: center;
-    }
-    body { padding-top: 50px; }
-    
-
-	.dropdown {
-		padding-top: 10px;
+	.nearWList {
+		width : 100%;
+		font-size : 3rem;
+	}
+	input{
+		font-size : 2rem;
+		border: 0;
+		outline: 0;
+		background: transparent;
+		border-bottom: 1px solid gray;
+		width : 50%;
+		
+	}
+	input:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0 30px white inset;
+	}
+	button {
+		background-color:mediumslateblue;
+		color : white;
 	}
 
-
+		.container >.row > div {
+		border-right : 2px solid gray;
+		
+	}
   </style>
 </head>
 
@@ -56,50 +58,55 @@
 
 <!-- 젤위에 -->
 <jsp:include page="sellerNaviTop.jsp" />
-
+	<div class="container" style="padding-top: 40px; height:300px">
+		<div class="row">
+			<div class="col-sm-2" style="height:300px;">
+				<div style="top:40%;left:20%;position:relative"><img src='${pageContext.request.contextPath}/resources/images/market.png' alt="mak" width="120" height="100"></div>
+			</div>
+			<div class="col-sm-2"style="height:300px; padding:0px;">
+			<svg style="width:100%;height:300px;">
+				<circle r="15" cx="0" cy="0" fill="rgb(250,50,50)"></circle>
+				<circle r="15" cx="70" cy="20"></circle>
+				<circle r="15" cx="60" cy="30"></circle>
+			</svg>
+			</div>
+			<div class="col-sm-2"style="height:300px;">
+				<svg style="width:100%;height:300px;">
+					<circle r="15" cx="100" cy="0" fill="rgb(250,50,50)"></circle>
+					<circle r="15" cx="150" cy="50"></circle>
+					<circle r="15" cx="30" cy="70"></circle>
+				</svg>
+			</div>
+			<div class="col-sm-3"style="height:300px;">
+			</div>
+			<div class="col-sm-3"style="height:300px;">
+			
+			</div>
+		
+		</div>	
+	</div>
 	<!--상품관리 -->
 	<div class="container" style="padding-top: 40px">
-		
-		<p>이름 | 원하는 사람</p>
-		<c:forEach items="${plist}" var = "plist">
-			<c:if test="(plist.index%4)==1">		<div class="row"></c:if>
-				<div class="col-sm-3">
-					<p>${plist.product_name} 
-						<span style="padding:1px 5px 1px 5px;background-color:MediumSeaGreen; border-radius:50%;color:white;"> ${plist.countP}</span>
-          				<span class="glyphicon glyphicon-envelope" style="color:MediumSeaGreen;"></span>
-					</p>
+		<%-- <h1 class="sh1">${slist.shop_name} 환영합니다.</h1> --%>
+		<h1>매장 근처 손님들이 원하는 상품들 입니다.</h1>
+		<hr style="border-width:3px">
+		<c:forEach items="${plist}" var = "plist" varStatus="status">
+
+				<div class="nearWList">
+						${plist.product_name} 
+						<span style="padding:1px 1rem 1px 1rem;background-color:mediumslateblue; border-radius:50%;color:white;"> ${plist.countP}</span>
+          				<span class="glyphicon glyphicon-envelope" style="color:mediumslateblue;" id="putmsg${status.index}"></span>
+ 						<input type="hidden" class="pushInput" value="${slist.shop_name }에서 ${plist.product_name}를 팔고있습니다." id="inputmsg${status.index}">
+ 						<button style="visibility:hidden" class="btn btnmsg" id="btnmsg${status.index}" value="${plist.product_no}">보내기</button> 
+ 						
 				</div>
-			<c:if test="(plist.index%4)==1">		</div></c:if>
+
 		</c:forEach>
 
 	</div>
-	
-	
 	<div class="container">
-	<jsp:include page="sellerNavi.jsp" />
+	<%-- <jsp:include page="sellerNavi.jsp" /> --%>
 	</div>
 
-<footer class="container-fluid text-center">
-   <form>
-      
-   <!--수정수정수정  -->
-  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
-
-   </form>
-	<div class="container">
-    <hr>
-        <div class="text-center center-block">
-            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
-            <br />
-                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-			</div>
-    <hr>
-	</div>
-
-</footer>
 </body>
 </html>

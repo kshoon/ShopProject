@@ -22,4 +22,5 @@ public class shopSellWishDTO {
 	public void setCountP(int countP) {
 		this.countP = countP;
 	}
+
 }

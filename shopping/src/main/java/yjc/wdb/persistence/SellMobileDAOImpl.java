@@ -69,4 +69,14 @@ public class SellMobileDAOImpl implements SellMobileDAO{
 	public List<MyWishShopDTO> MyWishShop(int mem_no) throws Exception {
 		return session.selectList(NAMESPACE+".MyWishShop", mem_no);
 	}
+	@Override
+	public List<MyWishShopDTO> BookWishShop(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".BookWishShop", mem_no);
+	}
+	@Override
+	public int CheckBook(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".CheckBook",mem_no);
+	}
 }

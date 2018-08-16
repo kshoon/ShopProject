@@ -81,6 +81,23 @@ public class SellShopServiceimpl implements SellShopService {
 		return dao.getAlram(mem_no);
 	}
 
+	@Override
+	public List<Product> getPWlist(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getPWlist(shop_no);
+	}
+
+	@Override
+	public void remAlr(int alram_no) throws Exception {
+		dao.remAlr(alram_no);		
+	}
+
+	@Override
+	public List<Product> IpSearch(int shop_no, String keyword) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.IpSearch(shop_no, keyword);
+	}
+
 	
 
 

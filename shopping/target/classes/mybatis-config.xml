@@ -9,6 +9,7 @@
   		<typeAlias alias="Wishlist" type="yjc.wdb.domain.Wishlist"/>
   		<typeAlias alias="Shop" type="yjc.wdb.domain.Shop"/>
   		<typeAlias alias="Alram" type="yjc.wdb.domain.Alram"/>
+  		<typeAlias alias="Bookmark" type="yjc.wdb.domain.Bookmark"/>
   		<!-- <typeAlias alias="LoginDTO" type="yjc.wdb.dto.LoginDTO"/> -->
   		<typeAlias alias="WishDTO" type="yjc.wdb.dto.WishDTO"/>
   		<typeAlias alias="MakDTO" type="yjc.wdb.dto.MakDTO"/>

@@ -94,6 +94,11 @@
 
    </select>
    
+   <select id="wishPno" resultType="int">
+   	select member_no from wishlist
+	where product_no = #{prod_no}
+   </select>
+   
    
    
    <select id="whisInProd" resultType="int">
@@ -114,4 +119,51 @@
 	and a.shop_no = b.shop_no
    </select>
 	
+	<select id="ShopPName" resultType="java.lang.String">
+		select p.product_name from shop_product sp, wishlist w, product p
+		where sp.shop_no = #{shop_no}
+		and w.member_no = #{mem_no}
+		and sp.product_no = w.product_no
+		and sp.product_no = p.product_no
+		order by p.product_name
+	</select>
+	
+	<insert id="insAlrTest">
+		insert into alram(member_no, product_no, alram_content, alram_distance) values (#{member_no}, #{key_no}, #{content}, #{met})
+	</insert>
+	
+	<select id="prodName" resultType="int">
+		select product_no from product where product_name = #{product_name}
+	</select>
+	
+	<select id="wlistNew" parameterType="yjc.wdb.dto.wishNewDTO" resultType="WishDTO">
+		select  wishList_no, a.wishList_date, b.product_no, b.product_name from wishlist a, product b
+		where a.member_no = #{member_no} and a.product_no = b.product_no order by  ${order}
+		<!--order#하면 스트링이라''들어감 $하면 문자열을 변경하거나 이스케이프 처리하지 않는다.  -->		
+		<!--참조 http://www.mybatis.org/mybatis-3/ko/sqlmap-xml.html  -->
+	</select>
+	
+	<select id="modSearch" resultType="Shop">
+		select * from shop where ${option} like CONCAT('%',#{keyval},'%') order by shop_name;
+	</select>
+	<insert id="insertBm">
+		insert into bookmark(member_no, shop_no) values (#{mem_no}, #{shop_no})
+	</insert>
+	<delete id="deleteBm">
+		delete from bookmark where member_no = #{mem_no} and shop_no = #{shop_no}
+	</delete>
+	<select id="selectBm1" resultType="int">
+		select count(shop_no) from bookmark where member_no = #{mem_no}
+	</select>
+	<select id="selectBm" resultType="Bookmark">
+		select * from bookmark where member_no = #{mem_no}
+	</select>
+	
+	<select id="selectBookSN" resultType="Shop">
+		select s.shop_no,s.shop_name from bookmark b, shop s where b.member_no = #{mem_no} and b.shop_no=s.shop_no
+	</select>
+	
+	<select id="selectGps" resultType="yjc.wdb.dto.GpsDTO">
+		select shop_gps_latitude,shop_gps_longitude from shop where shop_no =#{shop_no};
+	</select>
 </mapper>

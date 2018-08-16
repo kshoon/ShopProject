@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Alram {
 	private int alram_no;
 	private int member_no;
+	private int product_no;
 	private char alram_read;
 	private String alram_content;
 	private Timestamp alram_date;
@@ -45,5 +46,11 @@ public class Alram {
 	}
 	public void setAlram_distance(int alram_distance) {
 		this.alram_distance = alram_distance;
+	}
+	public int getProduct_no() {
+		return product_no;
+	}
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
 	}
 }

@@ -22,7 +22,7 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
-      background-color:black;
+      background-color:white;
     }
 
     /* Add a gray background color and some padding to the footer */
@@ -34,7 +34,8 @@
    	 font-weight: bold;
    	  text-align: center;
     }
-    body { padding-top: 50px; }
+    body { padding-top: 50px;
+     }
     
 
 	.dropdown {
@@ -60,11 +61,9 @@
 	<!-- 메인화면 -->
 	<div class="container">
 		<h1 class="sh1">${shop.shop_name} 환영합니다.</h1>
-		
-		
-		
-		
+
 	</div>
+	
 	<div class="container">
 		<jsp:include page="seller/sellerNavi.jsp" />
 	</div>

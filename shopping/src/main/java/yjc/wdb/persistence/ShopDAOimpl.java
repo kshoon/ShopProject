@@ -9,17 +9,21 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import yjc.wdb.domain.Alram;
+import yjc.wdb.domain.Bookmark;
 import yjc.wdb.domain.Member;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.SearchKeyword;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.domain.Wishlist;
+import yjc.wdb.dto.GpsDTO;
 import yjc.wdb.dto.InsertDTO;
 import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
 import yjc.wdb.dto.WishDTO;
 import yjc.wdb.dto.alrListDTO;
 import yjc.wdb.dto.makLDTO;
+import yjc.wdb.dto.wishNewDTO;
 
 @Repository
 public class ShopDAOimpl implements ShopDAO {
@@ -66,7 +70,7 @@ public class ShopDAOimpl implements ShopDAO {
 
 	@Override
 	public WishDTO selectProductList(String keyval) throws Exception {
-		System.out.println(keyval);
+		System.out.println("selectProductListDAO : "+keyval);
 		return session.selectOne(NAMESPACE+".selectPL", keyval);
 	}
 
@@ -142,6 +146,89 @@ public class ShopDAOimpl implements ShopDAO {
 		// TODO Auto-generated method stub
 		return session.selectList(NAMESPACE+".alrList", prod_no);
 	}
+
+	@Override
+	public List<String> ShopPName(int shop_no, int mem_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("shop_no", shop_no);
+		map.put("mem_no", mem_no);
+		return session.selectList(NAMESPACE+".ShopPName", map);
+	}
+
+	@Override
+	public List<Integer> wishPno(int prod_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".wishPno", prod_no);
+	}
+
+	@Override
+	public void InsAlrTest(Alram alram) throws Exception {
+		session.insert(NAMESPACE+".insAlrTest", alram);
+		
+	}
+
+	@Override
+	public int prodName(String product_name) throws Exception {
+		return session.selectOne(NAMESPACE+".prodName",product_name);
+	}
+
+	@Override
+	public List<WishDTO> wishNew(int member_no, String order) throws Exception {
+		wishNewDTO wishNew = new wishNewDTO(member_no, order);
+		System.out.println("wishNew: "+wishNew.getOrder());
+		return session.selectList(NAMESPACE+".wlistNew", wishNew);
+	}
+
+	@Override
+	public List<Shop> modSearch(String opt, String keyval) throws Exception {
+		Map<String,String> map = new HashMap<>();
+		map.put("option", opt);
+		map.put("keyval", keyval);
+		return session.selectList(NAMESPACE+".modSearch",map);
+	}
+
+	@Override
+	public void insertBm(int mem_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("mem_no", mem_no);
+		map.put("shop_no", shop_no);
+		session.insert(NAMESPACE+".insertBm",map);
+		
+	}
+
+	@Override
+	public void deleteBm(int mem_no, int shop_no) throws Exception {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("mem_no", mem_no);
+		map.put("shop_no", shop_no);
+		session.delete(NAMESPACE+".deleteBm",map);
+		
+	}
+	@Override
+	public List<Bookmark> selectBm(int mem_no) throws Exception {
+
+		return session.selectList(NAMESPACE+".selectBm",mem_no);
+		
+	}
+
+	@Override
+	public int selectBm1(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".selectBm1", mem_no);
+	}
+
+	@Override
+	public List<Shop> selectBookSN(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".selectBookSN",mem_no);
+	}
+
+	@Override
+	public GpsDTO selectGps(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".selectGps", shop_no);
+	}
+
 
 	
 

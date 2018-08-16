@@ -68,4 +68,15 @@ public class SellMobileServiceImpl implements SellMobileService {
 	public List<MyWishShopDTO> MyWishShop(int mem_no) throws Exception {
 		return dao.MyWishShop(mem_no);
 	}
+
+	@Override
+	public List<MyWishShopDTO> BookWishShop(int mem_no) throws Exception {
+		return dao.BookWishShop(mem_no);
+	}
+
+	@Override
+	public int CheckBook(int mem_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CheckBook(mem_no);
+	}
 }

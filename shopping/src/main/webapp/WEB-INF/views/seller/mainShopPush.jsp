@@ -24,27 +24,6 @@
 		</script>
   <script src='${pageContext.request.contextPath}/resources/js/mainShop.js'></script>
   <style>  
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color:black;
-    }
-
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    th {
-   	 font-weight: bold;
-   	  text-align: center;
-    }
-    body { padding-top: 50px; }
-    
-
-	.dropdown {
-		padding-top: 10px;
-	}
 
 
   </style>

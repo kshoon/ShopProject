@@ -2,11 +2,14 @@ package yjc.wdb.persistence;
 
 import java.util.List;
 
+import yjc.wdb.domain.Alram;
+import yjc.wdb.domain.Bookmark;
 import yjc.wdb.domain.Member;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.SearchKeyword;
 import yjc.wdb.domain.Shop;
 import yjc.wdb.domain.Wishlist;
+import yjc.wdb.dto.GpsDTO;
 import yjc.wdb.dto.InsertDTO;
 import yjc.wdb.dto.LoginDTO;
 import yjc.wdb.dto.MakDTO;
@@ -32,8 +35,22 @@ public interface ShopDAO {
 	public int productbool(String searchText)throws Exception;
 	public Product getProdOne(int prod_no) throws Exception;
 	public List<alrListDTO> alrList(int prod_no) throws Exception;
+	public List<String> ShopPName(int shop_no, int mem_no) throws Exception;
+	public List<Integer> wishPno(int prod_no) throws Exception;
 	
 	//sj
 	public int whisInProd(String product_name) throws Exception;
 	public List<Shop> getShopMem(int mem_no) throws Exception;
+	
+	public int prodName(String product_name) throws Exception;
+	public void InsAlrTest(Alram alram) throws Exception;
+	public List<WishDTO> wishNew(int member_no, String order) throws Exception;
+	public List<Shop> modSearch(String opt, String keyval) throws Exception;
+	public void insertBm(int mem_no, int shop_no) throws Exception;
+	public void deleteBm(int mem_no, int shop_no) throws Exception;
+	public List<Bookmark> selectBm(int mem_no) throws Exception;
+	public int selectBm1(int mem_no)  throws Exception;
+	public List<Shop> selectBookSN(int mem_no) throws Exception;
+	public GpsDTO selectGps(int shop_no) throws Exception;
+
 }

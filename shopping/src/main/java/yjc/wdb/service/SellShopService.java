@@ -19,4 +19,7 @@ public interface SellShopService {
 	public List<Product> getSold(int shop_no) throws Exception;
 	public void updateSPUO(int prod_no, int shop_no) throws Exception;
 	public List<Alram> getAlram(int mem_no) throws Exception;
+	public List<Product> getPWlist(int shop_no) throws Exception;
+	public void remAlr(int alram_no) throws Exception;
+	public List<Product> IpSearch(int shop_no, String keyword) throws Exception;
 }

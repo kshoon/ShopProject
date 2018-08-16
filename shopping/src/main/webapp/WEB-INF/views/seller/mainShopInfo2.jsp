@@ -23,30 +23,10 @@
 		</script>
   <script src='${pageContext.request.contextPath}/resources/js/mainShop.js'></script>
   <style>  
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color:black;
-    }
-
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    th {
-   	 font-weight: bold;
-   	  text-align: center;
-    }
-    body { padding-top: 50px; }
-    
-
-	.dropdown {
-		padding-top: 10px;
+	.title{
+		background-color: mediumslateblue !important;
+		color:white;
 	}
-	
-	
-	
 	/* ------매장정보 table style ----------*/
 	#infoTable {
 		padding-bottom: 3px;
@@ -84,8 +64,8 @@
 	/*수정 버튼*/
 	.modBtn {
 	    border: none;
-	    background-color: #e7e7e7;
-	    color: black;
+	    background-color: mediumslateblue ;
+	    color: white;
 	    padding: 10px 32px; 
 	    text-align: center;
 	    text-decoration: none;
@@ -97,7 +77,7 @@
 		float: right; 
 	}
 	
-	
+
 	
 
   </style>
@@ -108,6 +88,8 @@
 <!-- 젤위에 -->
 <jsp:include page="sellerNaviTop.jsp" />
 	<!-- 매장 선택 4개정도 -->
+
+
 	<div class="container">
 		<div class="row"  style="padding-top: 40px">
 			<div class="col-sm-6" id="map" style="height: 400px"></div>
@@ -115,39 +97,7 @@
 				<form class="form-horizontal" method="POST" style="margin-left:25px;">
 					<input type="hidden" name="mem_no"
 						value="${sessionScope.member.member_no }">
-					<!-- <div class="form-group">
-						<label>매장 이름  </label><input type="text" name="shop_name"
-							id="shopName">
-					</div>
-					<div class="form-group">
-						<label>매장 홈페이지 </label> <input type="text" id="shopHp"
-							name="shop_homepage">
-					</div>
-					<div class="form-group">
-						<label>매장 주소</label> <input type="text" id="shopAdr"
-							name="shop_addr">
-					</div>
-					<div class="form-group">
-						<label>상세 주소 </label> <input type="text" id="shopBunzi"
-							name="addr_bunzi">
-					</div>
-					<div class="form-group">
-						<label>영업 시간 </label> <input type="text" id="shopBh" name="shop_bh">
-					</div>
-					<div class="form-group">
-						<label>사진 </label> <input type="text" id="shopPi" name="shop_image">
-					</div>
 					
-					<div class="form-group">
-						<label>매장설명</label>
-						<textarea class="form-control" rows="3" id="shopEx"
-							name="shop_explain"> </textarea>
-					</div>
-
-					<button class='btn' id='shopMod'>수정</button>
-				</form>
-				
-				 -->
 				
 					<table style="width: 100%;" id="infoTable">
 						
@@ -196,38 +146,12 @@
 				</div>
 				
 				</form>
-				
-				
-				
-				<br><br><p>	홈페이지, 번지, 영업시간 수정가능</p>
+
 			</div>
 		</div>
 	</div>
 	<div class="container">
 	<jsp:include page="sellerNavi.jsp" />
 	</div>
-
-<footer class="container-fluid text-center">
-   <form>
-      
-   <!--수정수정수정  -->
-  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
-
-   </form>
-	<div class="container">
-    <hr>
-        <div class="text-center center-block">
-            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
-            <br />
-                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-			</div>
-    <hr>
-	</div>
-
-</footer>
 </body>
 </html>
