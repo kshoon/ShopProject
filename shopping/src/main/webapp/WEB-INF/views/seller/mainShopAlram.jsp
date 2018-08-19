@@ -59,13 +59,16 @@
  		<jsp:include page="sellerNaviLeft.jsp" />
  	</div>
 	<div id="right_area">
+	<div style="border-bottom:2px solid gray; font-size:3rem; margin-top:30px;margin-bottom:5px;">
+		알림보관함
+	</div>
   		<div class="row content">
    			 <div class="col-sm-3 sidenav">
-      			<br><br>
+      			
       			<h2>받은 알림함(${fn:length(alist)})</h2>    
     			</div>
 
-  		<div class="col-sm-9">
+  		<div class="col-sm-9" style="padding-top:15px;">
   	
      		 
      		<button class='btn Cwhite' id="allCheckBtn"><input type="checkbox" id='allCheck'></button>

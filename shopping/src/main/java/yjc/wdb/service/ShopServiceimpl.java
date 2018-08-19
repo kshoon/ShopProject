@@ -207,6 +207,12 @@ public class ShopServiceimpl implements ShopService {
 		return dao.selectGps(shop_no);
 	}
 
+	@Override
+	public void updateNos(int prod_no) throws Exception {
+		dao.updateNos(prod_no);
+		
+	}
+
 
 
 

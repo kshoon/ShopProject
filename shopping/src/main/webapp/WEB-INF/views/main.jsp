@@ -170,10 +170,10 @@
     border: 3px solid white;
     border-radius: 50%;
 
-    -webkit-animation-name: example;
+    /* -webkit-animation-name: example;
     -webkit-animation-duration: 4s;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 4s; */
 }
 @-webkit-keyframes example {
     0%   {border-color: red;}
@@ -328,7 +328,8 @@ color:white;
 </nav>
 <!-- 검색창  -->
 <div class="mapcon">
-	<div id="loading"></div>
+	<div id="loading"><img src='${pageContext.request.contextPath}/resources/images/backLoading.png'
+					 alt='loading'></div>
 	<div class="container">
 		<div class="dropdown" >
 			<form class="form-inline" role="search" id="Search">

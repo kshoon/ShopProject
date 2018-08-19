@@ -101,6 +101,16 @@ public class SellShopDAOimpl implements SellShopDAO {
 		ShopSearchDTO ssdto = new ShopSearchDTO(shop_no, keyword);
 		return session.selectList(NAMESPACE+".insertPsearch",ssdto);
 	}
+	@Override
+	public List<Product> selectNos() throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".selectNos");
+	}
+	@Override
+	public List<shopSellWishDTO> selectSsw(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(NAMESPACE+".selectSsw",shop_no);
+	}
 	
 
 

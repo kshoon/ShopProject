@@ -7,6 +7,10 @@
 		select * from shop where member_no = #{mem_no}
 	</select>
 	
+	<select id="selectNos" resultType="Product">
+		select * from product where product_nos order by product_nos desc limit 3
+	</select>
+	
 	<update id="updateShop">
 		update shop set shop_homepage = #{shop_homepage}, addr_bunzi = #{addr_bunzi}, shop_bh = #{shop_bh} where shop_no = #{shop_no}
 	</update>
@@ -60,6 +64,20 @@
 		and sp.soldout_check = 0
 		group by w.product_no
 		order by countP desc, p.product_name
+	</select>
+	
+	<select id="selectSsw" resultType="Ssw">
+		select w.product_no, p.product_name, count(w.product_no) as countP
+		from wishlist w
+		inner join shop_product sp
+		on w.product_no = sp.product_no
+		inner join product p
+		on w.product_no = p.product_no
+		where sp.shop_no = #{shop_no}
+		and sp.soldout_check = 0
+		group by w.product_no
+		order by countP desc, p.product_name
+		limit 3
 	</select>
 	
 	<select id="shopprodMem" resultType="int"> <!-- 매장이 가진 물건을 원하는 멤버 리스트  -->

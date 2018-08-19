@@ -22,4 +22,6 @@ public interface SellShopDAO {
 	public List<Product> getPWlist(int shop_no) throws Exception;
 	public void remAlr(int alram_no) throws Exception;
 	public List<Product> IpSearch(int shop_no, String keyword) throws Exception;
+	public List<Product> selectNos() throws Exception;
+	public List<shopSellWishDTO> selectSsw(int shop_no) throws Exception;
 }

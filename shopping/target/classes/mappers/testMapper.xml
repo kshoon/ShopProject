@@ -29,6 +29,11 @@
 	<insert id="insertB">
 		insert into product(product_name) values (#{keyval})
 	</insert>
+	<update id="nosP">
+		UPDATE product SET product_nos = product_nos + 1 WHERE product_no = #{prod_no};
+	</update>
+	
+	
 	<select id="selectPL" resultType="WishDTO">
 		select * from product where product_name = #{keyval}
 	</select>

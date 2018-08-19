@@ -54,6 +54,9 @@
  		<jsp:include page="sellerNaviLeft.jsp" />
  	</div>
 	<div id="right_area">
+		<div style="border-bottom:2px solid gray; font-size:3rem; margin-top:30px;margin-bottom:5px;">
+			내 상품 관리
+		</div>
 			<div class="row content"  id="midvar">
 			 <div class="col-sm-3">
 				<a href="mainShopProd"> 보유상품</a>
@@ -68,7 +71,7 @@
 				<a href="mainShopSold">  차단상품	</a>
 			 </div>
 		</div>
-		<h2>&gt;&gt;&gt;&gt;&nbsp;알람이 안뜨게 차단된 상품들 입니다.</h2>
+		<h2>&gt;&gt;&gt;&gt;&nbsp;알람이 차단된 상품들 입니다.</h2>
 		<hr style="border-width:3px">
 
 			<c:forEach items="${plist}" var = "plist">

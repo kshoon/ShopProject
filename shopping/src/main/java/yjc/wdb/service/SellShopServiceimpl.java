@@ -98,6 +98,18 @@ public class SellShopServiceimpl implements SellShopService {
 		return dao.IpSearch(shop_no, keyword);
 	}
 
+	@Override
+	public List<Product> selectNos() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectNos();
+	}
+
+	@Override
+	public List<shopSellWishDTO> selectSsw(int shop_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectSsw(shop_no);
+	}
+
 	
 
 

@@ -127,6 +127,7 @@ public class ShopController {
 		}else {
 			service.insertWish(dto);		//없을 시 추가
 		}
+		service.updateNos(prod_no);//검색횟수
 		List<WishDTO> wlist = getWishList(mem_no);
 		rttr.addFlashAttribute("wlist", wlist);
 
@@ -160,6 +161,7 @@ public class ShopController {
 		}else {
 		service.insertWish(dto2);
 		}
+		service.updateNos(prod_no);//검색횟수
 		List<WishDTO> wlist = getWishList(mem_no);
 
 		rttr.addFlashAttribute("wlist", wlist);

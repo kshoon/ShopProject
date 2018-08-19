@@ -38,6 +38,21 @@ public class ShopSellerController {
 	}
 	
 	
+	@RequestMapping(value="selectNos", method=RequestMethod.GET)		//판매자 매장정보
+	@ResponseBody public List<Product> selectNos() throws Exception{
+		
+		return service.selectNos();
+	}
+	
+	@RequestMapping(value="selectSsw", method=RequestMethod.GET)		//판매자 매장정보
+	@ResponseBody public List<shopSellWishDTO> selectSsw(HttpSession session) throws Exception{
+		Member member= (Member) session.getAttribute("member");
+		int mem_no = member.getMember_no();
+		List<Shop> list = service.myshop(mem_no); //리스트이지만 매장이 한개라고 가정 한개만 쓰도록 하겠음
+		int shop_no = list.get(0).getShop_no();
+		
+		return service.selectSsw(shop_no);
+	}
 	@RequestMapping(value="mainShopProd", method=RequestMethod.GET)		//판매자 상품관리
 	public String mainShopProd(HttpSession session,String id, Model model) throws Exception{
 		System.out.println("prod "+id);

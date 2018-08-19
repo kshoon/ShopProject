@@ -14,10 +14,11 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainS.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script type="text/javascript"
+  <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d7fa1315630f585572f6d7cd683066d&libraries=services"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <style>  
     .navbar {
       margin-bottom: 0;
@@ -44,7 +45,18 @@
 	.sh1 {
 		letter-spacing: -2px; 
 	}
-
+	#sellNaviT{
+		padding-top:15px;
+		font-size:3rem;
+		text-align:center;
+		border-bottom:2px solid gray;
+	}
+	#sellNaviT>div>a{
+		color:black;
+	}
+	.chartName{
+		font-size:1.5rem;
+	}
   </style>
 </head>
 <script>
@@ -55,59 +67,50 @@
 
 <!-- 젤위에 -->
 <jsp:include page="seller/sellerNaviTop.jsp" />
-	<div class="row">
-		<div class="col-sm-3">
-    		<a href="main">홈으로</a>
-    	</div>
-   		 <div class="col-sm-3">
-    		<a href="mainShopProd">내 상품 관리</a>
-   		</div>
-    	<div class="col-sm-3">
-    		<a href="mainShopInfo">매장 정보 관리</a>
-    	</div>
-    	<div class="col-sm-3">
-    		<a href="mainShopAlram">알림보관함</a>
-    	</div>
-    	<div class="col-sm-3">
-    		<a href="getQR?code=shop&width=300&height=300">코드생성</a>
-    	</div>
-	</div>
-
- 
-	<!-- 메인화면 -->
+	
 	<div class="container">
+		<div class="row" id="sellNaviT">
+			<div class="col-sm-3">
+    			<a href="main">홈으로</a>
+    		</div>
+   			 <div class="col-sm-3">
+    			<a href="mainShopProd">내 상품 관리</a>
+   			</div>
+    		<div class="col-sm-3">
+    			<a href="mainShopInfo">매장 정보 관리</a>
+    		</div>
+    		<div class="col-sm-3">
+    			<a href="mainShopAlram">알림보관함</a>
+    		</div>
+    		<div class="col-sm-3">
+    			<a href="getQR?code=shop&width=300&height=300">코드생성</a>
+    		</div>
+		</div> 
+	<!-- 메인화면 --><!-- 통계부분 -->
+
 		<h1 class="sh1">${shop.shop_name} 환영합니다.</h1>
+		<div class="row" style="margin-top:30px;">
+			<div class="col-sm-5" style="height:400px;">
+				<span class="chartName">가장 많이 추가된 상품입니다.</span>
+				<canvas id="Chart1"></canvas>
+			</div>
+			<div class="col-sm-2"></div>
+			<div class="col-sm-5" style="height:400px;">
+				<span class="chartName">인근 사람들이 많이 사려하는 상품입니다.</span>
+				<canvas id="Chart2"></canvas>
+			</div>
+		</div>
+		<div>
 		
-		
+		</div>
 		
 		
 	</div>
 	
-	<div class="container">
-		<jsp:include page="seller/sellerNavi.jsp" />
-	</div>
 
-<footer class="container-fluid text-center">
-   <form>
-      
-   <!--수정수정수정  -->
-  <%--  <input type="hidden" id="mem_id"  value="${member.member_no }"> --%>
-  <input type="hidden" id="mem_no" value="${sessionScope.member.member_no }">
 
-   </form>
-	<div class="container">
-    <hr>
-        <div class="text-center center-block">
-            <p class="txt-railway"style="font-family: 'Gugi', cursive; font-size: 2rem; color: black; display:inline-block "> <span>쇼핑깜빡</span> <i class="fa fa-lightbulb-o" style="margin-left: -5px; margin-right: -5px"></i> <span>이</span></p>
-            <br />
-                <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-			</div>
-    <hr>
-	</div>
 
-</footer>
 </body>
+<script src='${pageContext.request.contextPath}/resources/js/chartS.js'></script>
+
 </html>

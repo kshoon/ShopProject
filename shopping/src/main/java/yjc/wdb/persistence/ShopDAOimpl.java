@@ -229,6 +229,12 @@ public class ShopDAOimpl implements ShopDAO {
 		return session.selectOne(NAMESPACE+".selectGps", shop_no);
 	}
 
+	@Override
+	public void updateNos(int prod_no) throws Exception {
+		session.update(NAMESPACE+".nosP",prod_no);
+		
+	}
+
 
 	
 

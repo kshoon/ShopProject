@@ -51,4 +51,5 @@ public interface ShopService {
 	public int selectBm1(int mem_no) throws Exception;
 	public List<Shop> selectBookSN(int mem_no) throws Exception;
 	public GpsDTO selectGps(int shop_no) throws Exception;
+	public void updateNos(int prod_no) throws Exception;
 	}
