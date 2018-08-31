@@ -186,7 +186,7 @@ form {
 		<div class="submit-wrap">
 			<input type="submit" value="Sign in" class="submit center-block">
 			<a href="#" class="more">Forgot your password?</a>
-			<a href="#" class="more">sign up</a>
+			<a href="registerform1" class="more">sign up</a>
 		</div>
 	</form>
 

@@ -76,9 +76,13 @@ $(document).ready(function(){
 		 location.reload();
 	});
 	$("#alramOkBtn").on("click", function(){	//알람 전체 추가
-		$('input[name=alramCheck]:checked').each(function(){
-			alert(this.value);
-		});
+		var flag = confirm("전체 상품을 추가하시겠습니까?");
+		if (flag) {
+			$('input[name=alramCheck]:checked').each(function(){
+				var alr_no = this.value;
+				$.get("alramIns?alram_no="+alr_no+"&mem_no="+mem_no, function(data, status){});
+			});
+		}
 	});
 	$("#alramTrashBtn").on("click", function(){	// 알람 전체 삭제
 		$('input[name=alramCheck]:checked').each(function(){
@@ -90,7 +94,12 @@ $(document).ready(function(){
 		 location.reload();
 	});
 	$(".alrIns").on("click", function(){		//알람 추가
-		alert(this.getAttribute("data-alrNo"));
+		var flag = confirm("추가하시겠습니까?");
+		if (flag) {
+			var alr_no = this.getAttribute("data-alrNo");
+			$.get("alramIns?alram_no="+alr_no+"&mem_no="+mem_no, function(data, status){});	
+		}
+		
 	});
 	$(".alrRem").on("click", function(){			//알람 삭제
 		var alr_no = this.getAttribute("data-alrNo");
@@ -254,6 +263,7 @@ function InfoShop(){ 	//매장정보 불러옴
 			$("#shopEx").val(data[0].shop_explain);
 			$("#shopBunzi").val(data[0].addr_bunzi);
 			$("#shopBh").val(data[0].shop_bh);
+			$("#shopPhone").val(data[0].shop_phone);
 			
 			
 			

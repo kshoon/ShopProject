@@ -29,25 +29,36 @@
 	.navbar-brand > span {
 		font-family: 'Gugi', cursive ;
 	}
+
 	#midvar{	
 		font-size:2rem;
 		text-align: center;
+		padding-top : 25px;
+		margin-bottom:30px;
 	}
 
 	#midvar > div:nth-child(-n+3) {
 		border-right : 2px solid gray;
 		
 	}
-	
+	#midalvar{
+		font-size:2rem;
+		text-align: center;
+		padding-top : 25px;
+		margin-bottom:30px;
+	}
+		#midalvar > div:nth-child(-n+1) {
+		border-right : 2px solid gray;
+		
+	}
 	#wrap_area{overflow:hidden; position:relative; width:1000px; margin:0 auto;}
 	#left_area{position:absolute; top:0px; left:0px; bottom:0px; width:15%; background:rgb(254,254,254);font-size:2rem;}
 	#right_area{float:right;  display:block; width:85%; min-height:900px; padding-right:15%; padding-left:30px;}
 	
-	
-	#midvar {
-		padding-top : 25px;
-		margin-bottom:50px;
+	.chartName{
+		font-size:2rem;
 	}
+
 	.nav-tabs{
 		font-size:22px;
 		margin-top:15px !important;

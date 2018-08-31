@@ -103,6 +103,10 @@
 	<select id="getAlram" resultType="Alram">
 		select * from alram where member_no = #{mem_no}
 	</select>
+	<select id="getAlramProd" resultType="int">
+		select product_no from alram where alram_no = #{alr_no}
+	</select>
+	
 	<delete id="remAlr">
 		delete from alram where alram_no = #{alram_no}
 	</delete>

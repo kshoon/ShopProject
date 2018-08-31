@@ -118,9 +118,9 @@
 				
 				
 				
-					<c:if test="${i.index%4==0 && i.index <= 40}">		<div class="row"></c:if>
+					<c:if test="${i.index%4==0 && i.index < 40}">		<div class="row"></c:if>
 
-					<c:if test="${i.index%4==0 && i.index > 40}">		<div class="row dinone"></c:if>
+					<c:if test="${i.index%4==0 && i.index >= 40}">		<div class="row dinone"></c:if>
 
 
 						<div class="col-sm-3" style="padding-top:5px;">
@@ -132,7 +132,7 @@
 						</div>
 				
 					<c:if test="${i.index%4==3 || i.last}"></div></c:if>		
-					<c:if test="${i.index > 40 && i.last}"> <button id="listAll">더보기</button></c:if>
+					<c:if test="${i.index >= 40 && i.last}"> <button id="listAll">더보기</button></c:if>
 				
 				
 		</c:forEach>

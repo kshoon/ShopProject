@@ -24,4 +24,5 @@ public interface SellShopService {
 	public List<Product> IpSearch(int shop_no, String keyword) throws Exception;
 	public List<Product> selectNos() throws Exception;
 	public List<shopSellWishDTO> selectSsw(int shop_no) throws Exception;
+	public int getAlramProd(int alr_no) throws Exception;
 }

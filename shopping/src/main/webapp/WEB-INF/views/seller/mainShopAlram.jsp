@@ -45,6 +45,9 @@
 	#navi4{
 		background-color: thistle;
 	}
+	a, a:hover{
+		color:black;
+	}
 	
   </style>
 </head>
@@ -62,11 +65,19 @@
 	<div style="border-bottom:2px solid gray; font-size:3rem; margin-top:30px;margin-bottom:5px;">
 		알림보관함
 	</div>
+	<div class="row content" id="midalvar">
+			 <div class="col-sm-3" style="background:lavender;">
+				<a href="mainShopAlram"> 받은 알림함</a>
+			 </div>
+			 <div class="col-sm-3">
+				<a href="mainShopNearW">  알림 보내기 </a>
+			 </div>
+	</div>
   		<div class="row content">
    			 <div class="col-sm-3 sidenav">
       			
       			<h2>받은 알림함(${fn:length(alist)})</h2>    
-    			</div>
+    		</div>
 
   		<div class="col-sm-9" style="padding-top:15px;">
   	

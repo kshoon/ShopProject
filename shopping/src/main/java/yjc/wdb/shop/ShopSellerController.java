@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +19,6 @@ import yjc.wdb.domain.Alram;
 import yjc.wdb.domain.Member;
 import yjc.wdb.domain.Product;
 import yjc.wdb.domain.Shop;
-import yjc.wdb.dto.WishDTO;
 import yjc.wdb.dto.shopSellWishDTO;
 import yjc.wdb.service.SellShopService;
 
@@ -165,8 +163,15 @@ public class ShopSellerController {
 	
 	
 	
-	
-
+	@RequestMapping(value="alramIns", method=RequestMethod.GET)		//알람 상품추가
+	@ResponseBody public void alramIns(int alram_no, int mem_no) throws Exception{
+		List<Shop> list = service.myshop(mem_no); 
+		int shop_no = list.get(0).getShop_no();
+		int prod_no = service.getAlramProd(alram_no);
+		
+		service.InsertSPP(prod_no, shop_no);
+		service.remAlr(alram_no);
+	}	
 	@RequestMapping(value="alramRem", method=RequestMethod.GET)		//알람 삭제
 	@ResponseBody public void alramRem(int alram_no) throws Exception{
 		service.remAlr(alram_no);

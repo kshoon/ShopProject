@@ -110,6 +110,12 @@ public class SellShopServiceimpl implements SellShopService {
 		return dao.selectSsw(shop_no);
 	}
 
+	@Override
+	public int getAlramProd(int alr_no) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getAlramProd(alr_no);
+	}
+
 	
 
 

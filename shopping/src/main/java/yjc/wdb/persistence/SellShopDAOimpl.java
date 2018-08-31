@@ -111,6 +111,11 @@ public class SellShopDAOimpl implements SellShopDAO {
 		// TODO Auto-generated method stub
 		return session.selectList(NAMESPACE+".selectSsw",shop_no);
 	}
+	@Override
+	public int getAlramProd(int alr_no) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(NAMESPACE+".getAlramProd", alr_no);
+	}
 	
 
 

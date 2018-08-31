@@ -45,6 +45,7 @@
 					<exclude-mapping path="/MyWishShop"/>
 					<exclude-mapping path="/BookWishShop"/>
 					<exclude-mapping path="/CheckBook"/>
+					
 					<exclude-mapping path="/asdf"/>
 				<beans:ref bean="authInterceptor" />
 			</interceptor> 

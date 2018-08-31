@@ -12,6 +12,7 @@ $(document).ready(function(){
 	
 	//registerform2
 	$("#cancle").on("click", function(){
+		
 		history.back(); //뒤로가기
 	});
 	

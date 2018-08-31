@@ -54,13 +54,11 @@
 	#sellNaviT>div>a{
 		color:black;
 	}
-	.chartName{
-		font-size:1.5rem;
-	}
+
   </style>
 </head>
 <script>
-/* document.location.href="mainShopNearW"; */
+/*  document.location.href="mainShopNearW"; */ 
 </script>
 <body>
 
@@ -82,9 +80,9 @@
     		<div class="col-sm-3">
     			<a href="mainShopAlram">알림보관함</a>
     		</div>
-    		<div class="col-sm-3">
+    		<!-- <div class="col-sm-3">
     			<a href="getQR?code=shop&width=300&height=300">코드생성</a>
-    		</div>
+    		</div> -->
 		</div> 
 	<!-- 메인화면 --><!-- 통계부분 -->
 
@@ -99,6 +97,9 @@
 				<span class="chartName">인근 사람들이 많이 사려하는 상품입니다.</span>
 				<canvas id="Chart2"></canvas>
 			</div>
+		</div>
+		<div style="padding-top: 100px">
+			
 		</div>
 		<div>
 		
